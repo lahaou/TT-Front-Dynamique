@@ -1,0 +1,1081 @@
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">{{traduction.langue.add_formulaire_operateur}} </h4>
+                            <span class="text-danger" *ngIf="erreursaisie">* tous les champs sont obligatoires</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+
+                                <form [formGroup]="operateurForm">
+
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">{{traduction.langue.nom}} </label>
+                                        <select type="text" class="form-control" formControlName="nom">
+                                            <option selected value="Celtel Niger SA">Celtel Niger SA</option>
+                                            <option value="Moov Africa Niger SA">Moov Africa Niger SA</option>
+                                            <option value="Niger Télécoms SA">Niger Télécoms SA</option>
+                                            <option value="Zamani Telecom Niger SA">Zamani Telecom Niger SA</option>
+                                            <option value="International">International</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="prenom">{{traduction.langue.codeRecharge}}</label>
+                                        <input type="text" formControlName="codeRecharge" class="form-control"
+                                            [(ngModel)]="codeRecharge" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="prenom">Code Numéro</label>
+                                        <input type="text" formControlName="codeNumero" class="form-control"
+                                            [(ngModel)]="codeNumero" />
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="prenom">MCC</label>
+                                                <input type="text" formControlName="mcc" class="form-control"
+                                                    [(ngModel)]="mcc" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label for="prenom">MNC</label>
+                                        <input type="text" formControlName="mnc" class="form-control"
+                                            [(ngModel)]="mnc" />
+                                    </div>
+                                </div>
+
+                                   
+                            </div>
+
+                                    <div class="form-group">
+                                        <label for="username">{{traduction.langue.apnInternet}}</label>
+                                        <input type="text" formControlName="apnInternet" class="form-control"
+                                            [(ngModel)]="apnInternet" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">{{traduction.langue.enumPDPType}}</label>
+                                        <select class="form-control" formControlName="enumPDPType">
+                                            <option selected value="IP">IP</option>
+                                            <option value="PPP">PPP</option>
+                                            <option value="IPV6">IPV6</option>
+                                            <option value="IPV4V6">IPV4V6</option>
+                                        </select>
+
+
+                                    </div>
+
+
+
+
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <div class="form-group">
+                                                <label for="exampleFormControlSelect1"></label>
+                                                <div *ngIf="!edit">
+                                                    <button class="btn btn-primary" style="margin-right: 1rem;"
+                                                        (click)="onSubmit()">{{traduction.langue.ajouter}}</button>
+                                                    <button class="btn btn-secondary"
+                                                        (click)="onReset()">{{traduction.langue.effacer}}</button>
+                                                </div>
+                                                <div *ngIf="edit">
+                                                    <button class="btn btn-primary" style="margin-right: 1rem;"
+                                                        (click)="onSubmitEdit()">{{traduction.langue.modifier}}</button>
+                                                    <button class="btn btn-secondary"
+                                                        (click)="onReset()">{{traduction.langue.annuler}}</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">{{traduction.langue.list_formulaire_operateur}}</h4>
+                            <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0"> </ul>
+                            </div>
+                        </div>
+                        <div class="card-content">
+
+                            <div class="table-responsive">
+                                <table id="recent-orders" class="table table-hover mb-0 ps-container ps-theme-default">
+                                    <thead>
+                                        <tr>
+                                            <th title="{{traduction.langue.nom}}">{{traduction.langue.nom}}</th>
+                                            <th title="MCC/MNC">MCC/MNC</th>
+                                            <th title="{{traduction.langue.codeRecharge}}">
+                                                {{traduction.langue.codeRecharge}}</th>
+                                                <th title="code Numéro">Code numéro</th>
+                                            <th title="{{traduction.langue.apnInternet}}">
+                                                {{traduction.langue.apnInternet}}</th>
+                                            <th>{{traduction.langue.action}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let operateur of operateurs">
+                                            <td class="text-truncate">{{operateur.nom}}</td>
+                                            <td class="text-truncate">{{operateur.mcc}}/{{operateur.mnc}}</td>
+                                            <td class="text-truncate">{{operateur.codeRecharge}}</td>
+                                            <td class="text-truncate">{{operateur.codeNumero}}</td>
+                                            <td class="text-truncate">{{operateur.apnInternet}}</td>
+
+
+                                            <td class="text-truncate">
+                                                <a data-toggle="modal" title="{{traduction.langue.supprimer}}"
+                                                    data-target="#default" (click)="deleteOperateur(operateur)"
+                                                    class="todo-item-delete" style="margin-right: 1rem;"><i
+                                                        class="fa fa-trash text-danger"></i></a>
+                                                <a title="{{traduction.langue.modifier}}"
+                                                    (click)="editOperateur(operateur)" class="todo-item-delete"
+                                                    style="margin-right: 1rem;"><i class="fa fa-edit text-info"></i></a>
+                                                <a data-toggle="modal" title="Ajouter compte"
+                                                    style="margin-right: 1rem;" (click)="addCompte(operateur.id)"
+                                                    data-target="#modal-compte"><i class="fa fa-plus-circle"
+                                                        aria-hidden="true"></i></a>
+
+
+                                                <a data-toggle="modal" title="Afficher compte"
+                                                    (click)="listeCompteussd(operateur.id)"><i class="fa fa-eye"
+                                                        aria-hidden="true"></i></a>
+
+
+                                                        <a style="margin-left: 1rem;" data-toggle="modal" title="Retour Durée Opérateur" (click)='idoperateur(operateur.id)' data-target="#retourDuree">
+                                                        
+                                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                                        </a>
+
+
+                                                        
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Liste des comptes</h4>
+                            <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0"> </ul>
+                            </div>
+                        </div>
+                        <div class="card-content">
+
+                            <div class="table-responsive">
+                                <table *ngIf="false" id="recent-orders"
+                                    class="table table-hover mb-0 ps-container ps-theme-default">
+                                    <thead>
+                                        <tr>
+                                            <th title="{{traduction.langue.nom}}">{{traduction.langue.nom}}</th>
+                                            <th title="codeUssd">codeUssd</th>
+                                            <th title="codeUssd">regex</th>
+                                            <th title="codeUssd">suffixe</th>
+                                            <th>{{traduction.langue.action}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let cp of listCompteByIdoperateur;
+                                            ">
+                                            <td class="text-truncate">{{cp.nom}}</td>
+                                            <td class="text-truncate">{{cp.ussd.code}}</td>
+                                            <td class="text-truncate">{{cp.regex}}</td>
+                                            <td class="text-truncate">{{cp.suffixe}}</td>
+
+
+
+                                            <td class="text-truncate">
+                                                <a data-toggle="modal" title="{{traduction.langue.supprimer}}"
+                                                    data-target="#defaultcompte" (click)="deleteCompte(cp)"
+                                                    class="todo-item-delete" style="margin-right: 1rem;"><i
+                                                        class="fa fa-trash text-danger"></i></a>
+
+                                                <a title="{{traduction.langue.modifier}}" (click)="editCompte3(cp)"
+                                                    class="todo-item-delete" style="margin-right: 1rem;"
+                                                    data-toggle="modal" data-target="#modal-compte"><i
+                                                        class="fa fa-edit text-info"></i></a>
+
+
+
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+
+                                <table id="recent-orders" class="table table-hover mb-0 ps-container ps-theme-default">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center;width: 50%;">Code USSD</th>
+                                            <th style="text-align: center;padding-left: 0px;padding-right: 0px;">
+                                                <div style="width: 50%;float: left;text-align: center;">Nom de Compte
+                                                </div>
+                                                <div style="width: 50%;float: left;text-align: center;">Action </div>
+
+                                            </th>
+                                        </tr>
+
+                                    </thead>
+
+                                    <tr *ngFor="let cp of listUssd;">
+                                        <td>
+                                            <a title="{{traduction.langue.delete}}" (click)="deleteUssdCompte(cp)"
+                                                class="todo-item-delete" style="margin-right: 2rem;" data-toggle="modal"
+                                                data-target="#defaultussd"><i class="fa fa-trash text-danger"></i></a>
+
+                                            <a title="{{traduction.langue.modifier}}" (click)="selectCompteToUpdate(cp)"
+                                                class="todo-item-delete" style="margin-right: 2rem;" data-toggle="modal"
+                                                data-target="#modal-ussd"><i class="fa fa-edit text-info"></i></a>
+
+                                            {{test(cp)}}
+
+
+
+
+
+
+                                        </td>
+                                        <td style="padding-left: 0px;padding-right: 0px;">
+
+
+                                            <ng-container *ngFor="let c of cp.comptes;">
+
+
+
+
+                                                <div style="overflow-x: auto;">
+
+                                                    <div
+                                                        style="width: 50%;float: left;text-align: center;margin-bottom: 0.5rem;">
+                                                        {{c.nom}} </div>
+
+                                                    <!--
+                                                    <div
+                                                        style="width: 60%;float: left;text-align: center;margin-bottom: 0.5rem;">
+                                                       .......
+                                                    </div>
+                                                  -->
+
+                                                    <div
+                                                        style="width: 50%;float: left;text-align: center;margin-bottom: 0.5rem;">
+                                                        <a title="{{traduction.langue.modifier}}"
+                                                            (click)="editCompte2(c)" class="todo-item-delete"
+                                                            style="margin-right: 2rem;" data-toggle="modal"
+                                                            data-target="#modal-compte2"><i
+                                                                class="fa fa-edit text-info"></i></a>
+
+                                                        <a data-toggle="modal" title="{{traduction.langue.supprimer}}"
+                                                            data-target="#defaultcompteussd" (click)="deleteCompte(c)"
+                                                            class="todo-item-delete" style="margin-right: 2rem;"><i
+                                                                class="fa fa-trash text-danger"></i></a>
+
+
+
+                                                        <a data-toggle="modal"
+                                                            title="{{traduction.langue.ajouter}} syntaxe"
+                                                            data-target="#regex-ussd" style="margin-right: 1rem;"
+                                                            (click)="addRegex(c)">
+                                                            <i class="fa fa-plus-circle"></i>
+                                                        </a>
+
+                                                        <a data-toggle="modal"
+                                                        title="Consulter syntaxe"
+                                                        data-target="#regex-ussd-list" style="margin-right: 1rem;"
+                                                        (click)="addRegex(c)">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+
+
+
+                                                    </div>
+
+
+                                                </div>
+
+                                            </ng-container>
+
+
+                                        </td>
+
+
+                                    </tr>
+
+                                </table>
+
+
+
+                            </div>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </div>
+
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- END: Content-->
+
+
+
+
+
+
+
+
+
+<!-- Modal HTML -->
+<div id="default" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fa fa-trash text-danger"></i>
+                </div>
+
+                <h4 class="modal-title"> {{traduction.langue.headerdelete}} </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p> {{traduction.langue.messagedelete}} </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal"> {{traduction.langue.btncancel}}
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                    (click)="deleteOperateurConfirm(operateurDelete)"> {{traduction.langue.btndelete}} </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="defaultcompte" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fa fa-trash text-danger"></i>
+                </div>
+
+                <h4 class="modal-title"> {{traduction.langue.headerdelete}} </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p> {{traduction.langue.messagedelete}} </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal"> {{traduction.langue.btncancel}}
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                    (click)="deleteCompteConfirm(compteDelete)"> {{traduction.langue.btndelete}} </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="defaultcompteussd" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fa fa-trash text-danger"></i>
+                </div>
+
+                <h4 class="modal-title"> {{traduction.langue.headerdelete}} </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p> {{traduction.langue.messagedelete}} </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal"> {{traduction.langue.btncancel}}
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="defaultcompteussd(compte)">
+                    {{traduction.langue.btndelete}} </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="defaultussd" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fa fa-trash text-danger"></i>
+                </div>
+
+                <h4 class="modal-title"> {{traduction.langue.headerdelete}} </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p> {{traduction.langue.messagedelete}} </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal"> {{traduction.langue.btncancel}}
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deletetussd()">
+                    {{traduction.langue.btndelete}} </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal HTML -->
+<div id="modal-compte" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+
+            <section id="tabs" class="project-tab">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <nav>
+                                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                    <a *ngIf="!editActiveCompte" class="nav-item nav-link active" id="nav-home-tab"
+                                        data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home">Ajouter
+                                        Compte</a>
+                                    <a *ngIf="!editActiveCompte" class="nav-item nav-link" id="nav-profile-tab"
+                                        data-toggle="tab" href="#nav-profile" role="tab"
+                                        aria-controls="nav-profile">Ajouter Code USSD</a>
+
+                                    <a *ngIf="editActiveCompte" class="nav-item nav-link active" id="nav-home-tab"
+                                        data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home">Modifier
+                                        Compte</a>
+                                    <a *ngIf="editActiveCompte" class="nav-item nav-link" id="nav-profile-tab"
+                                        data-toggle="tab" href="#nav-profile" role="tab"
+                                        aria-controls="nav-profile">Modifier Code USSD</a>
+
+                                </div>
+                            </nav>
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                    aria-labelledby="nav-home-tab">
+                                    <br>
+                                    <form [formGroup]="compteForm">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Code</label>
+                                            <select class="form-control" formControlName="code">
+                                                <option value="0">sélectionner un code Ussd</option>
+                                                <option *ngFor="let code of listUssd;" value="{{code.id}}">
+                                                    
+                                                    {{test(code)}}
+
+
+
+                                                </option>
+                                            </select>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Nom</label>
+                                            <input type="text" formControlName="nom" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Préfixe</label>
+                                            <input type="text" formControlName="prefixe" class="form-control" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Type Valeur</label>
+                                            <select class="form-control" formControlName="typeValeur">
+                                                <option value="0">sélectionner un type</option>
+                                                <option *ngFor="let val of typeValeurs" value="{{val}}">{{val}}</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Suffixe</label>
+                                            <input type="text" formControlName="suffixe" class="form-control" />
+                                        </div>
+
+
+
+
+
+                                        <div class="form-row">
+
+                                            <button *ngIf="!editActiveCompte" class="btn btn-primary"
+                                                (click)="onSubmitCompte()">{{traduction.langue.ajouter}}</button>
+                                            <button *ngIf="editActiveCompte" class="btn btn-primary"
+                                                (click)="onSubmitCompte()">{{traduction.langue.modifier}}</button>
+                                            <button class="btn btn-danger" (click)="onResetcompte()"
+                                                data-dismiss="modal">{{traduction.langue.annuler}}</button>
+
+                                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    </form>
+
+                                </div>
+                                <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                                    aria-labelledby="nav-profile-tab">
+                                    <br>
+                                    <form [formGroup]="ussdForm">
+
+
+
+
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Code :
+                                                <b>
+                                                    <ng-container *ngFor="let ussd of listCodeUssd;">
+                                                        -> {{ussd.code}}
+                                                    </ng-container>
+                                                </b>
+
+                                            </label>
+                                            <input type="text" formControlName="code" class="form-control" />
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="code">Type de retour</label>
+                                            <select class="form-control" formControlName="typeRetourUSSD">
+                                                <option value="USSD">USSD</option>
+                                                <option value="SMS">SMS</option>
+                                                <option value="USSD_SMS">USSD_SMS</option>
+                                            </select>
+                                        </div>
+
+
+                                        
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input form-control"
+                                                        formControlName="codeDynamique" id="defaultUnchecked1">
+                                                    <label class="custom-control-label" for="defaultUnchecked1">Code
+                                                        dynamique</label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input form-control"
+                                                        formControlName="suiteMessage" id="defaultUnchecked2">
+                                                    <label class="custom-control-label" for="defaultUnchecked2">Code
+                                                        Suivant</label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                     
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group" *ngIf="this.ussdForm.value.codeDynamique">
+                                                <label for="exampleFormControlSelect1">Prefixe</label>
+                                                <input type="text" formControlName="prefixe" class="form-control" />
+                                            </div>
+    
+                                            <div class="form-group" *ngIf="this.ussdForm.value.codeDynamique">
+                                                <label for="exampleFormControlSelect1">Type Valeur</label>
+                                                <select class="form-control" formControlName="typeValeur">
+                                                    <option value="0">sélectionner un type</option>
+                                                    <option *ngFor="let val of typeValeurs" value="{{val}}">{{val}}</option>
+                                                </select>
+                                            </div>
+    
+                                            <div class="form-group" *ngIf="this.ussdForm.value.codeDynamique">
+                                                <label for="exampleFormControlSelect1">Suffixe</label>
+                                                <input type="text" formControlName="suffixe" class="form-control" />
+    
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group" *ngIf="this.ussdForm.value.suiteMessage">
+                                                <label for="exampleFormControlSelect1">Prefixe</label>
+                                                <input type="text" formControlName="prefixeS" class="form-control" />
+                                            </div>
+    
+                                            <div class="form-group" *ngIf="this.ussdForm.value.suiteMessage">
+                                                <label for="exampleFormControlSelect1">Type Valeur</label>
+                                                <select class="form-control" formControlName="typeValeurS">
+                                                    <option value="0">sélectionner un type</option>
+                                                    <option *ngFor="let val of typeValeurs" value="{{val}}">{{val}}</option>
+                                                </select>
+                                            </div>
+    
+                                            <div class="form-group" *ngIf="this.ussdForm.value.suiteMessage">
+                                                <label for="exampleFormControlSelect1">Suffixe</label>
+                                                <input type="text" formControlName="suffixeS" class="form-control" />
+    
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                        
+
+                                     
+
+
+
+                                    
+                             
+                                        <div class="form-group">
+                                            <button class="btn btn-info btn-xs"(click)="addOnlist()">USSD suivant</button>
+                                        </div>
+                                      
+                                        <br>
+
+                                        <div class="form-row">
+
+                                                <button *ngIf="!editActiveCompte" class="btn btn-primary"
+                                                (click)="onSubmitCodeussd()">{{traduction.langue.ajouter}}</button>
+
+                                            <button class="btn btn-danger" (click)="onResetcompte()"
+                                                data-dismiss="modal">{{traduction.langue.annuler}}</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- modifier code ussd -->
+<div id="modal-ussd" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+
+          
+            <b>Sélectionner un Code USSD :</b>
+            <div *ngFor="let compteussd of editmulticompte;">
+            <div >
+                <input type="radio" id="{{compteussd?.id}}" name="drone"  value="{{compteussd}}" style="margin-right: 1rem;"  (click)="editCompte(compteussd)">
+                <label for="{{compteussd?.id}}"  > {{compteussd?.code}} 
+                    <ng-container  *ngIf="compteussd?.codeDynamique"> - code Dynamique</ng-container>
+                    <ng-container  *ngIf="compteussd?.suiteMessage"> - suite Message</ng-container>
+                </label>
+     
+            </div>
+              
+            </div>
+
+
+            <form [formGroup]="ussdForm">
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Code</label>
+                    <input type="text" formControlName="code" class="form-control" />
+                </div>
+
+                <div class="row">
+                    <div class="col" *ngIf="compteSelected?.codeDynamique">
+                        Code dynamique :
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Prefixe</label>
+                            <input type="text" formControlName="prefixe" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Type Valeur</label>
+                            <select class="form-control" formControlName="typeValeur">
+                                <option value="0">sélectionner un type</option>
+                                <option *ngFor="let val of typeValeurs" value="{{val}}">{{val}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Suffixe</label>
+                            <input type="text" formControlName="suffixe" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col" *ngIf="compteSelected?.suiteMessage">
+                        Code Suivant :
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Prefixe</label>
+                            <input type="text" formControlName="prefixeS" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Type Valeur</label>
+                            <select class="form-control" formControlName="typeValeurS">
+                                <option value="0">sélectionner un type</option>
+                                <option *ngFor="let val of typeValeurs" value="{{val}}">{{val}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Suffixe</label>
+                            <input type="text" formControlName="suffixeS" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+               
+
+              
+
+               
+
+               
+
+
+                <div class="form-group">
+                    <label for="code">Type de retour</label>
+                    <select class="form-control" formControlName="typeRetourUSSD">
+                        <option value="USSD">USSD</option>
+                        <option value="SMS">SMS</option>
+                        <option value="USSD_SMS">USSD_SMS</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+
+                    <button class="btn btn-primary"   (click)="onSubmitCodeussd()" data-dismiss="modal">{{traduction.langue.modifier}}</button>
+            
+                    
+
+                    <button class="btn btn-danger" (click)="onResetcompte()" data-dismiss="modal">{{traduction.langue.annuler}}</button>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal HTML -->
+<div id="modal-compte2" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+
+
+            <form [formGroup]="compteForm">
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Code</label>
+                    <select class="form-control" formControlName="code">
+                        <option value="0">sélectionner un code Ussd</option>
+                        <option *ngFor="let code of listUssd;" value="{{code.id}}">{{code.code}}
+                        </option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">nom</label>
+                    <input type="text" formControlName="nom" class="form-control" />
+                </div>
+             
+                <div class="form-row">
+
+                    <button class="btn btn-primary" (click)="onSubmitCompte()" data-dismiss="modal">{{traduction.langue.modifier}}</button>
+                    <button class="btn btn-danger" (click)="onResetcompte()"
+                        data-dismiss="modal">{{traduction.langue.annuler}}</button>
+
+                </div>
+
+
+
+
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal add regex -->
+<div id="regex-ussd" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <h4 class="modal-title"> {{compteregex?.nom}}</h4>
+
+
+            <br>   
+            <form [formGroup]="regexForm">
+
+
+<div *ngIf="this.regexForm.value.formatSoldeConsomme"><p style="text-align: center;"><b>Solde Consommé</b></p></div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Préfixe</label>
+                    <input type="text" formControlName="prefixe" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Type Valeur</label>
+                    <select class="form-control" formControlName="typeValeur">
+                        <option value="0">Sélectionner un type</option>
+                        <option *ngFor="let val of typeValeurs" value="{{val}}">{{val}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Suffixe</label>
+                    <input type="text" formControlName="suffixe" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                                                                        
+                    <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input form-control" formControlName="formatSoldeConsomme" id="defaultUnchecked">
+                            <label class="custom-control-label" for="defaultUnchecked">Format solde consommé</label>
+                        </div>
+                                                                 
+                    </div>
+                    <div *ngIf="this.regexForm.value.formatSoldeConsomme"><p style="text-align: center;"><b >Forfait Total</b></p></div>
+                    <div class="form-group" *ngIf="this.regexForm.value.formatSoldeConsomme">
+                        <label for="exampleFormControlSelect1">Préfixe</label>
+                        <input type="text" formControlName="prefixe2" class="form-control" />
+                    </div>
+    
+                    <div class="form-group" *ngIf="this.regexForm.value.formatSoldeConsomme">
+                        <label for="exampleFormControlSelect1">Type Valeur</label>
+                        <select class="form-control" formControlName="typeValeur2">
+                            <option value="0">Sélectionner un type</option>
+                            <option *ngFor="let val of typeValeurs" value="{{val}}">{{val}}</option>
+                        </select>
+                    </div>
+    
+                    <div class="form-group" *ngIf="this.regexForm.value.formatSoldeConsomme">
+                        <label for="exampleFormControlSelect1">Suffixe</label>
+                        <input type="text" formControlName="suffixe2" class="form-control" />
+                    </div>
+
+
+
+                <div class="form-row">
+
+                    <button class="btn btn-primary" (click)="onSubmitRegex()">{{traduction.langue.ajouter}}</button>
+                    <button class="btn btn-danger" (click)="onResetcompte()"
+                        data-dismiss="modal">{{traduction.langue.annuler}}</button>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal list regex -->
+<div id="regex-ussd-list" class="modal fade" >
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content" *ngIf="compteregex">
+            <h4 class="modal-title"> {{compteregex?.nom}}</h4>
+            <br>
+            <br>
+
+
+            <form [formGroup]="regexForm" *ngIf="hideformvariable" style="margin-bottom: 2rem;">
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Préfixe</label>
+                    <input type="text" formControlName="prefixe" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Type Valeur</label>
+                    <select class="form-control" formControlName="typeValeur">
+                        <option value="0">Sélectionner un type</option>
+                        <option *ngFor="let val of typeValeurs" value="{{val}}">{{val}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Suffixe</label>
+                    <input type="text" formControlName="suffixe" class="form-control" />
+                </div>
+
+            
+            
+                <div class="form-row">
+
+                    <button class="btn btn-primary" (click)="onSubmitRegex()" (click)="closeModal()" >{{traduction.langue.modifier}}</button>
+                    <button class="btn btn-danger"  (click)="onResetcompte()" (click)="hideform(false)" >{{traduction.langue.annuler}}</button>
+
+                </div>
+                </form>
+                
+
+
+
+
+
+
+
+
+
+
+            <table id="recent-orders" class="table table-hover mb-0 ps-container ps-theme-default">
+                <thead>
+                    <tr>
+                        <th style="text-align: center;">Prefixe</th>
+                        <th style="text-align: center;">Type Valeur</th>
+                        <th style="text-align: center;">Suffixe</th>
+                        <th style="text-align: center;">Action</th>
+                       
+                    </tr>
+
+                </thead>
+                <tbody>
+
+                <tr *ngFor="let cp of compteregex.expressions;">
+                    <td style="text-align: center;">{{cp.prefixe}}</td>
+                    <td style="text-align: center;">{{cp.typeValeur}}</td>
+                    <td style="text-align: center;">{{cp.suffixe}}</td>
+                    <td style="text-align: center;">    
+                        <a title="{{traduction.langue.supprimer}}" (click)="deleteRegex(cp.id)" style="margin-right: 2rem;" (click)="hideform(false)" data-dismiss="modal"><i class="fa fa-trash text-danger"></i></a>
+
+                        <a title="{{traduction.langue.modifier}}" (click)="modifierRegex(cp)" (click)="hideform(true)"  style="margin-right: 2rem;"><i class="fa fa-edit text-default"></i></a>
+                    </td>
+
+                </tr>
+            </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal retourDuree operateur -->
+<div id="retourDuree" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content" >
+            <h4 class="modal-title">Retour Durée Opérateur</h4>
+            <br>
+            <br>
+            <form [formGroup]="retourTempsOperateurForm" style="margin-bottom: 2rem;">
+
+            <div class="form-group" >
+                <label for="exampleFormControlSelect1">Préfixe</label>
+                <input type="text" formControlName="prefixe" class="form-control" />
+            </div>
+
+            <div class="form-group" >
+                <label for="exampleFormControlSelect1">Type Valeur</label>
+                <select class="form-control" formControlName="typeValeur">
+                    <option value="0">Sélectionner un type</option>
+                    <option *ngFor="let val of typeValeurs" value="{{val}}">{{val}}</option>
+                </select>
+            </div>
+
+            <div class="form-group" >
+                <label for="exampleFormControlSelect1">Suffixe</label>
+                <input type="text" formControlName="suffixe" class="form-control" />
+            </div>
+
+
+
+        <div class="form-row">
+
+            <button class="btn btn-primary" (click)="onSubmitRetourTempsOperateur()">{{traduction.langue.ajouter}}</button>
+            <button class="btn btn-danger" (click)="onResetcompte()" data-dismiss="modal">{{traduction.langue.annuler}}</button>
+
+        </div>
+            </form>
+
+            <table id="recent-orders" class="table table-hover mb-0 ps-container ps-theme-default">
+                <thead>
+                    <tr>
+                        <th style="text-align: center;">Préfixe</th>
+                        <th style="text-align: center;">Type Valeur</th>
+                        <th style="text-align: center;">Suffixe</th>
+                        <th style="text-align: center;">Action</th>
+                       
+                    </tr>
+
+                </thead>
+                <tbody>
+
+                <tr *ngFor="let cp of listretourTempsoperateur">
+                    <td style="text-align: center;">{{cp.prefixe}}</td>
+                    <td style="text-align: center;">{{cp.typeValeur}}</td>
+                    <td style="text-align: center;">{{cp.suffixe}}</td>
+                    <td style="text-align: center;">    
+                        <a title="{{traduction.langue.supprimer}}" (click)="deleteRegexTempsOperateur(cp.id)" style="margin-right: 2rem;" ><i class="fa fa-trash text-danger"></i></a>
+
+                        <a title="{{traduction.langue.modifier}}" (click)="modifierTempOperateur(cp)"  style="margin-right: 2rem;"><i class="fa fa-edit text-default"></i></a>
+                    </td>
+
+                </tr>
+               
+            </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

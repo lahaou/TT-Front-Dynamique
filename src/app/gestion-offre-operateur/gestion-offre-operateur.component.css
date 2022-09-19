@@ -1,0 +1,30 @@
+.itemhover:hover {
+	background: rgba(0,0,0,0);
+	color: #ff7588;
+	box-shadow: inset 0 0 0 3px #ffffff;
+}
+
+.itemhover1:hover {
+	background: rgba(0,0,0,0);
+	color: #00b5b8;
+	box-shadow: inset 0 0 0 3px #ffffff;
+}
+
+.itemhover2:hover {
+	background: rgba(0,0,0,0);
+	color: #2dcee3;
+	box-shadow: inset 0 0 0 3px #ffffff;
+}
+
+
+.itemhover {
+	cursor: pointer;
+}
+
+.itemhover1 {
+	cursor: pointer;
+}
+
+.itemhover2 {
+	cursor: pointer;
+}

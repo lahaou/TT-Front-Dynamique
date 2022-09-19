@@ -1,0 +1,37 @@
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+
+
+
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title" >Scenario en Exécution </h4>
+
+
+                    <a data-action="stop execution" >
+                        <i class="fa fa-stop" (click)="stop()"
+                            style="float: right ;margin-right: 1rem;margin-left: 1rem;" > {{traduction.langue.stopexecution}} </i>
+                    </a>
+                   
+
+                </div>
+               
+
+                <div class="card-content">
+                    <div class="card-body">
+
+                        <p class="mesgs" style="font-size: 14px; color:grey; margin-bottom: 0; overflow: scroll;height: 400px; max-height: 400px;width: 100%;;overflow-x: hidden;text-align: left;" [innerHtml]="ScenarioService.resultglobal"> </p>
+               
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

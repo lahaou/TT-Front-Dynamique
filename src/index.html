@@ -1,0 +1,197 @@
+﻿
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="author" content="nidhal">
+    <base href="/" />
+    <title>Tariffs Tracker</title>
+
+    
+    <link rel="shortcut icon" type="image/x-icon" href="assets/app-assets/images/ico/favicon.ico">
+    <link href="./assets/assets/css/google.css" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="assets/app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/app-assets/vendors/css/extensions/unslider.css">
+    <link rel="stylesheet" type="text/css" href="assets/app-assets/vendors/css/weather-icons/climacons.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/app-assets/fonts/meteocons/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/app-assets/vendors/css/charts/morris.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="assets/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="assets/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="assets/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="assets/app-assets/css/components.css">
+    <!-- END: Theme CSS-->
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="assets/app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="assets/app-assets/css/core/colors/palette-gradient.css">
+    <link rel="stylesheet" type="text/css" href="assets/app-assets/fonts/simple-line-icons/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/app-assets/css/core/colors/palette-gradient.css">
+    <link rel="stylesheet" type="text/css" href="assets/app-assets/css/pages/timeline.css">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="assets/assets/css/style.css">
+    <!-- END: Custom CSS-->
+
+ 
+    <link rel="stylesheet" type="text/css" href="assets/app-assets/vendors/css/tables/datatable/datatables.min.css">
+
+
+
+
+    <style type="text/css">
+        body {
+            font-family: 'Varela Round', sans-serif;
+        }
+        .modal-confirm {		
+            color: #636363;
+            width: 700px;
+            max-width: 1200px;
+        }
+        .modal-confirm .modal-content {
+            padding: 20px;
+            border-radius: 5px;
+            border: none;
+  
+            font-size: 14px;
+        }
+        .modal-confirm .modal-header {
+            border-bottom: none;   
+            position: relative;
+        }
+        .modal-confirm h4 {
+            text-align: center;
+            font-size: 26px;
+            margin: 30px 0 -10px;
+        }
+        .modal-confirm .close {
+            position: absolute;
+            top: -5px;
+            right: -2px;
+        }
+        .modal-confirm .modal-body {
+            color: #999;
+        }
+        .modal-confirm .modal-footer {
+            border: none;
+            text-align: center;		
+            border-radius: 5px;
+            font-size: 13px;
+            padding: 10px 15px 25px;
+        }
+        .modal-confirm .modal-footer a {
+            color: #999;
+        }		
+        .modal-confirm .icon-box {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            border-radius: 50%;
+            z-index: 9;
+            text-align: center;
+            border: 3px solid #f15e5e;
+        }
+        .modal-confirm .icon-box i {
+            color: #f15e5e;
+            font-size: 46px;
+            display: inline-block;
+            margin-top: 13px;
+        }
+        .modal-confirm .btn {
+            color: #fff;
+            border-radius: 4px;
+            background: #60c7c1;
+            text-decoration: none;
+            transition: all 0.4s;
+            line-height: normal;
+            min-width: 120px;
+            border: none;
+            min-height: 40px;
+            border-radius: 3px;
+            margin: 0 5px;
+            outline: none !important;
+        }
+        .modal-confirm .btn-info {
+            background: #c1c1c1;
+        }
+        .modal-confirm .btn-info:hover, .modal-confirm .btn-info:focus {
+            background: #a8a8a8;
+        }
+        .modal-confirm .btn-danger {
+            background: #f15e5e;
+        }
+        .modal-confirm .btn-danger:hover, .modal-confirm .btn-danger:focus {
+            background: #ee3535;
+        }
+        .trigger-btn {
+            display: inline-block;
+            margin: 100px auto;
+        }
+    </style>
+    <link href="./assets/assets/css/css.css" rel="stylesheet">
+   
+
+
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu 2-columns   fixed-navbar" data-open="click" data-menu="vertical-menu" data-col="2-columns" style="  position: relative;">
+        
+
+
+
+
+    <app></app>
+
+
+ 
+    
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="assets/app-assets/vendors/js/vendors.min.js"></script>
+    <script src="assets/app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="assets/app-assets/vendors/js/charts/raphael-min.js"></script>
+    <script src="assets/app-assets/vendors/js/charts/morris.min.js"></script>
+    <script src="assets/app-assets/vendors/js/extensions/unslider-min.js"></script>
+    <script src="assets/app-assets/vendors/js/timeline/horizontal-timeline.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="assets/app-assets/js/core/app-menu.js"></script>
+    <script src="assets/app-assets/js/core/app.js"></script>
+    <script src="assets/app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS
+    <script src="assets/app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+     END: Page JS-->
+     <script src="./assets/assets/js/jspdf.min.js"></script>
+     <script src="../node_modules/chart.js/dist/Chart.js"></script>
+
+
+
+</body>
+<!-- END: Body-->
+
+</html>

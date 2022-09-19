@@ -1,0 +1,315 @@
+
+
+
+ <!-- BEGIN: Content-->
+ <div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="row">
+                <div class="col-md-4" *ngIf="false">
+           
+                                <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">{{traduction.langue.add_formulaire_sim}}</h4>                    
+                                        </div>
+                                        <div class="card-content">
+
+                                            <div class="card-body">
+
+                          
+
+                                                <form [formGroup]="SimForm" >
+                                                    <div class="form-group">
+                                                            <label for="exampleFormControlSelect1">{{traduction.langue.operateur}}</label>
+                                                            <select class="form-control" formControlName="idOperateur" (change)="ChangingValue()" >
+                                                                <option *ngFor="let op of operateurs;"  value="{{op.id}}">{{op.nom}}</option>                             
+                                                            </select>
+                                                
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlSelect1">{{traduction.langue.offre}}</label>
+                                                        <select class="form-control" formControlName="idOffre" >
+                                                            <option *ngFor="let of of OffresAssocie;"  value="{{of.id}}">{{of.nom}}</option>                             
+                                                        </select>
+                                            
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="email">{{traduction.langue.imsi}}</label>
+                                                    <input type="text" disabled formControlName="imsi" class="form-control"/>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="email">{{traduction.langue.msisdn}}</label>
+                                                    <input type="text" formControlName="msisdn" class="form-control"/>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="email">Type Payement</label>
+                                                    <input type="text" formControlName="typePayement" class="form-control"/>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="email">Note</label>
+                                                    <input type="text" formControlName="note" class="form-control"/>
+                                                </div>
+                                                </form>
+
+
+
+
+                                                <div class="form-row">
+                                                    <div class="col-md-4 mb-3" *ngIf="!edit">
+                                                            <button  class="btn btn-primary" (click)="addSIM()">{{traduction.langue.ajouter}}</button>
+                                                    </div>
+                                                    <div class="col-md-4 mb-3" *ngIf="edit">
+                                                            <button  class="btn btn-primary" (click)="addSIM()">{{traduction.langue.modifier}}</button>
+                                                    </div>
+                                                    <div class="col-md-4 mb-3" *ngIf="!edit">
+                                                            <button  class="btn btn-secondary" (click)="onReset()">{{traduction.langue.effacer}}</button>
+                                                    </div>
+                                                    <div class="col-md-4 mb-3" *ngIf="edit">
+                                                            <button  class="btn btn-secondary" (click)="onReset()">{{traduction.langue.annuler}}</button>
+                                                    </div>
+                                                </div>
+            
+                                               
+                                              </div>  
+
+                                         
+                                     
+
+                                               
+                                            </div>
+                                        </div>
+                                    
+                </div>
+
+                <div class="col-md-12">
+           
+                    <div class="card">
+                       
+                            <div class="card-header">
+                                <h4 class="card-title">{{traduction.langue.list_formulaire_sim}}</h4>
+                                <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0">
+                                        <li title="{{traduction.langue.database}}" (click)="listeSimsParOperateur(idOperateur,true)"><a data-action="list"><i class="ft-menu"></i></a></li>
+                                        <li title="{{traduction.langue.reload}}" (click)="reloadSIM()"><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                               
+                                   
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-content">
+
+                                <div class="card-body">
+                                        <div class="col-md-4" *ngIf="hideInput" [formGroup]="SimForm">
+                                                <select class="form-control" formControlName="idOperateur" (change)="ChangingValue()" >
+                                                        <option *ngFor="let op of operateurs;"  value="{{op.id}}">{{op.nom}}</option>                             
+                                                    </select>
+                                                    <br>
+
+                                        </div>
+                                        
+                            
+              
+                                    <div class="table-responsive">
+                                        <table id="recent-orders" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                                                
+                                            <thead>
+                                                <tr>
+                                                    <th>{{traduction.langue.imsi}}</th>
+                                                    <th>{{traduction.langue.msisdn}}</th>
+                                                    <th>{{traduction.langue.operateur}}</th>
+                                                    <th>{{traduction.langue.offre}}</th>
+                                                    <th>Type Payement</th>
+                                                    <th>Note</th>
+                                             
+                                                    
+                                                    <th *ngIf="!hideInput">{{traduction.langue.etat}}</th>
+                                                    <th>{{traduction.langue.action}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                       
+                                                           
+                                    <tr [formGroup]="SimForm">
+                                        <td class="text-truncate"><input type="text" disabled formControlName="imsi" class="form-control"/></td>
+                                        <td class="text-truncate"><input type="text" formControlName="msisdn" class="form-control"/></td>
+                                     
+                                        <td class="text-truncate">   
+                                            <select class="form-control" formControlName="idOperateur" (change)="ChangingValue()"  >
+                                                <option *ngFor="let op of operateurs;"  value="{{op.id}}">{{op.nom}}</option>                             
+                                            </select>
+                                        </td>
+                                        <td class="text-truncate">
+                                                <select class="form-control" formControlName="idOffre" >
+                                                        <option *ngFor="let of of OffresAssocie;"  value="{{of.id}}">{{of.nom}}</option>                             
+                                                    </select>
+                                        </td>
+
+                                        <td class="text-truncate">
+                                            <select class="form-control" formControlName="typePayement" >
+                                                    <option selected value="PREPAYEE" >PREPAYEE</option>  
+                                                    <option   value="POSTPAYEE">POSTPAYEE</option>                            
+                                                </select>
+                                    </td>
+
+                                    <td class="text-truncate"><input type="text" formControlName="note" class="form-control"/></td>
+                                        <td *ngIf="!hideInput" class="text-truncate"></td>
+
+                                        
+                                        
+                                        <td  class="text-truncate">
+                                        
+                    <a *ngIf="!edit && false" title="{{traduction.langue.ajouter}}"  (click)="addSIM()" data-action="expand" style="font-size: 20px;margin-right: 1rem;"><i class="ft-plus-circle"></i></a>
+                    <a *ngIf="!edit && !hideInput && false" title="{{traduction.langue.effacer}}"   (click)="onReset()" data-action="expand" style="font-size: 20px;margin-right: 1rem;"><i class="ft-slash"></i></a>
+
+
+
+                    <a *ngIf="!hideInput && edit" title="{{traduction.langue.modifier}}"  (click)="addSIM()" data-action="expand" style="font-size: 20px;margin-right: 1rem;"><i class="ft-edit"></i></a>
+                    <a *ngIf="hideInput && edit" title="{{traduction.langue.modifier}}"   (click)="addSIMToDB()" data-action="expand" style="font-size: 20px;margin-right: 1rem;"><i class="ft-edit"></i></a>
+                    <a  title="{{traduction.langue.annuler}}"   (click)="onReset()" data-action="expand" style="font-size: 20px;margin-right: 1rem;"><i class="ft-slash"></i></a>
+                                            
+                                        </td>
+                                    
+                                    </tr>
+                        
+
+
+
+
+
+                                                <ng-container *ngFor="let sim of SimsAssocie" >
+                                                        <ng-container *ngIf="sim?.etat == 'NO_SIM'" >
+                                                            <tr >
+                                                            
+                                                                <td class="text-truncate">***</td>
+                                                                <td class="text-truncate">***</td>
+                                                                <td class="text-truncate">***</td>
+                                                                <td class="text-truncate">***</td>
+                                                                <td class="text-truncate">***</td>
+                                                                <td class="text-truncate">***</td>
+                                                                <td  *ngIf="!hideInput" class="text-truncate"><span class="badge badge-secondary">{{traduction.langue.nosim}}</span></td>
+
+                                                                
+                                                                
+                                                                <td class="text-truncate">***</td>
+                                                            
+                                                            </tr>
+                                                      </ng-container> 
+
+                                                      <ng-container *ngIf="sim.etat != 'NO_SIM'" >
+                                                            <tr>
+                                                         
+                                                                <td class="text-truncate">{{sim?.imsi}} <span *ngIf="!hideInput">(Port : {{sim?.portSim}} )</span></td>
+                                                            <td class="text-truncate">{{sim?.msisdn}}</td>
+                                                                <td class="text-truncate">{{sim?.operateur?.nom}}</td>
+                                                                <td class="text-truncate">{{sim?.offre?.nom}}</td>
+                                                                <td class="text-truncate">{{sim?.typePayement}}</td>
+                                                                <td class="text-truncate">{{sim?.note}}</td>
+
+                                                                <td class="text-truncate" *ngIf="sim.etat == 'NOT_SAVE'  && !hideInput  " ><span class="badge badge-info">{{traduction.langue.notsave}}</span></td>
+                                                                <td class="text-truncate" *ngIf="sim.etat == 'CONNECTED'  && !hideInput " ><span class="badge badge-success">{{traduction.langue.connected}}</span></td>
+                                                                <td class="text-truncate" *ngIf="sim.etat == 'WAITING_PIN'  && !hideInput " ><span class="badge badge-warning">{{traduction.langue.pinwaiting}}</span></td>
+																<td class="text-truncate" *ngIf="sim.etat == 'BUSY'  && !hideInput " ><span class="badge badge-warning">Occupée</span></td>
+                                                              
+
+                                                                <td class="text-truncate">
+         <a *ngIf="hideInput" data-toggle="modal" title="{{traduction.langue.supprimer}}" data-target="#default" (click)="selectSim(sim)" class="todo-item-delete" style="margin-right: 1rem;"><i class="fa fa-trash text-danger"></i></a>
+
+
+         <a  *ngIf="!sim?.demandePIN"  title="{{traduction.langue.modifier}}" (click)="editSim(sim)"  class="todo-item-delete"><i class="fa fa-edit text-info"></i></a>
+         <a  *ngIf="sim?.demandePIN" title="{{traduction.langue.modifier}}" (click)="editSim(sim)" data-toggle="modal"  data-target="#pin"  class="todo-item-delete"><i class="fa fa-edit text-info"></i></a>
+
+                                                                </td>
+                                                            </tr>
+                                                      </ng-container> 
+                                            </ng-container>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                  
+                                    
+                                   
+                                  </div>  
+
+                             
+                         
+
+                                   
+                                </div>
+                            </div>
+                        
+    </div>
+
+
+            
+              </div>
+                 
+
+        </div>
+    </div>
+</div>
+<!-- END: Content-->
+
+<!-- Modal HTML -->
+<div id="default" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="icon-box">
+                            <i class="fa fa-trash text-danger"></i>
+                    </div>		
+                  	
+                    <h4 class="modal-title"> {{traduction.langue.headerdelete}} </h4>	
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p> {{traduction.langue.messagedelete}} </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal"> {{traduction.langue.btncancel}} </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deletesim(SIM.id)"> {{traduction.langue.btndelete}} </button>
+                </div>
+            </div>
+        </div>
+    </div>  
+
+
+<div class="modal fade text-left" id="pin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel1">CODE PIN</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" >
+                  <!--Saisie code pin pour {{SIM.imsi}} port {{SIM.portSim}}--> 
+
+
+                   
+                    <form [formGroup]="PinForm">
+                            <div class="form-group">
+                                    <label for="prenom">Saisie code PIN</label>
+                                <input type="text" formControlName="codeUSSD" class="form-control"/>
+                       
+                            </div>
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" (click)="setPIN(SIM?.portSim)" data-dismiss="modal">Confirmer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    

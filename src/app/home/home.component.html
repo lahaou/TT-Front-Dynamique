@@ -1,0 +1,299 @@
+﻿<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+
+
+
+            <!--stats-->
+            <div class="row">
+                <div class="col-xl-3 col-lg-6 col-12" *ngIf="currentUser?.role == 'Administrateur'">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-body text-left w-100">
+                                        <h3 class="primary">{{dash?.users}}</h3>
+                                        <span>{{traduction.langue.user}}</span>
+                                    </div>
+                                    <div class="media-right media-middle">
+                                        <i class="icon-user-follow primary font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                                <div class="progress progress-sm mt-1 mb-0">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 80%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6 col-12" *ngIf="currentUser?.role == 'Administrateur'">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-body text-left w-100">
+                                        <h3 class="danger">{{dash?.offres}}</h3>
+                                        <span>{{traduction.langue.offre}}</span>
+                                    </div>
+                                    <div class="media-right media-middle">
+                                        <i class="icon-social-dropbox danger font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                                <div class="progress progress-sm mt-1 mb-0">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 80%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6 col-12" *ngIf="currentUser?.role == 'Administrateur'">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-body text-left w-100">
+                                        <h3 class="success">{{dash?.operateurs}}</h3>
+                                        <span>{{traduction.langue.operateurs}}</span>
+                                    </div>
+                                    <div class="media-right media-middle">
+                                        <i class="icon-target success font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                                <div class="progress progress-sm mt-1 mb-0">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 80%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-body text-left w-100">
+                                        <h3 class="warning">{{dash?.sims}}</h3>
+                                        <span>{{traduction.langue.sim}}</span>
+                                    </div>
+                                    <div class="media-right media-middle">
+                                        <i class="ft-smartphone warning font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                                <div class="progress progress-sm mt-1 mb-0">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 80%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-xl-3 col-lg-6 col-12" *ngIf="currentUser?.role == 'Administrateur'">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-body text-left w-100">
+                                        <h3 class="warning">{{dash?.serveursFTP}}</h3>
+                                        <span>{{traduction.langue.serveurftp}}</span>
+                                    </div>
+                                    <div class="media-right media-middle">
+                                        <i class="ft-server warning font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                                <div class="progress progress-sm mt-1 mb-0">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 80%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-xl-3 col-lg-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-body text-left w-100">
+                                        <h3 class="warning">{{dash?.scenarios}}</h3>
+                                        <span>{{traduction.langue.scenarios}}</span>
+                                    </div>
+                                    <div class="media-right media-middle">
+                                        <i class="icon-link warning font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                                <div class="progress progress-sm mt-1 mb-0">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 80%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-xl-3 col-lg-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-body text-left w-100">
+                                        <h3 class="warning">{{dash?.campagnes}}</h3>
+                                        <span>{{traduction.langue.campagne}}</span>
+                                    </div>
+                                    <div class="media-right media-middle">
+                                        <i class="icon-layers warning font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                                <div class="progress progress-sm mt-1 mb-0">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 80%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-xl-3 col-lg-6 col-12">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-body text-left w-100">
+                                        <h3 class="warning">{{dash?.planifications}}</h3>
+                                        <span>{{traduction.langue.planification}}</span>
+                                    </div>
+                                    <div class="media-right media-middle">
+                                        <i class="icon-calendar warning font-large-2 float-right"></i>
+                                    </div>
+                                </div>
+                                <div class="progress progress-sm mt-1 mb-0">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 80%"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--/stats-->
+
+
+
+
+        <div class="card">
+
+            <div class="card-header">
+                <h4 class="card-title">{{traduction.langue.list_formulaire_sim}}</h4>
+                <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                <div class="heading-elements">
+                    <ul class="list-inline mb-0">
+                        <li title="{{traduction.langue.reload}}" (click)="listeSims()"><a
+                                data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+
+
+                    </ul>
+                </div>
+            </div>
+            <div class="card-content">
+
+                <div class="card-body">
+    
+
+                    <div class="table-responsive">
+                        <table id="recent-orders" class="table table-striped table-bordered table-sm"
+                            cellspacing="0" width="100%">
+
+                            <thead>
+                                <tr>
+                                    <th>{{traduction.langue.imsi}}</th>
+                                    <th>{{traduction.langue.msisdn}}</th>
+                                    <th>Note</th>
+                                    <th>{{traduction.langue.operateur}}</th>
+                                    <th>{{traduction.langue.offre}}</th>
+                                    <th>{{traduction.langue.etat}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <ng-container *ngFor="let sim of SimsAssocie">
+                                    <ng-container *ngIf="sim?.etat == 'NO_SIM'">
+                                        <tr>
+                                            <td class="text-truncate">***</td>
+                                            <td class="text-truncate">***</td>
+                                            <td class="text-truncate">***</td>
+                                            <td class="text-truncate">***</td>
+                                            <td class="text-truncate">***</td>
+                                            <td class="text-truncate"><span  class="badge badge-secondary">{{traduction.langue.nosim}} </span></td>
+                                        </tr>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="sim.etat != 'NO_SIM'">
+                                        <tr>
+                                            <td class="text-truncate">{{sim?.imsi}} <span>(Port : {{sim?.portSim}} )</span></td>
+                                            <td class="text-truncate">{{sim?.msisdn}}</td>
+                                            <td class="text-truncate">{{sim?.note}}</td>
+                                            <td class="text-truncate">{{sim?.operateur?.nom}}</td>
+                                            <td class="text-truncate">{{sim?.offre?.nom}}</td>
+                      
+
+                                            <td class="text-truncate"
+                                                *ngIf="sim.etat == 'NOT_SAVE'"><span
+                                                    class="badge badge-info">{{traduction.langue.notsave}}</span>
+                                            </td>
+                                            <td class="text-truncate"
+                                                *ngIf="sim.etat == 'CONNECTED'  "><span
+                                                    class="badge badge-success">{{traduction.langue.connected}}</span>
+                                            </td>
+                                            <td class="text-truncate"
+                                                *ngIf="sim.etat == 'WAITING_PIN'"><span
+                                                    class="badge badge-warning">{{traduction.langue.pinwaiting}}</span>
+                                            </td>
+                                            <td class="text-truncate"
+                                                *ngIf="sim.etat == 'BUSY' "><span
+                                                    class="badge badge-warning">Occupée</span></td>
+
+
+                                        </tr>
+                                    </ng-container>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
+<!-- END: Content-->

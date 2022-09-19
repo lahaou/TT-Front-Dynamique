@@ -1,0 +1,159 @@
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">{{traduction.langue.add_formulaire_planification}}</h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+
+                                <form [formGroup]="planificationForm">
+
+                                  
+
+
+                                        <div class="form-group">
+                                            <label for="datePlanification">{{traduction.langue.dateEx}}</label>
+                                            <input type="datetime-local" formControlName="datePlanification"
+                                                [(ngModel)]="datePlanification" name="datePlanification"
+                                                class="form-control" />
+                                        </div>
+
+                                  
+                                            <div class="form-group"  *ngIf="!update" style="float: left;">
+                                                <label for="btn" style="color: white;">.</label>
+                                                <button name="btn" class="btn btn-primary" (click)="onSubmit()"
+                                                    style="color: white;">{{traduction.langue.ajouter}}</button>
+                                            </div>
+
+                                            <div class="form-group" *ngIf="update" style="float: left;">
+                                                <label for="btn" style="color: white;">.</label>
+                                                <button name="btn" class="btn btn-danger" (click)="annuler()"
+                                                    style="color: white;">{{traduction.langue.annuler}}</button>
+                                            </div>
+
+                                            <div class="form-group" *ngIf="update" style="float: left;">
+                                                <label for="btn" style="color: white;">.</label>
+                                                <button name="btn" class="btn btn-danger" (click)="modifier()"
+                                                    style="color: white;">{{traduction.langue.modifier}}</button>
+                                            </div>
+
+                                     
+                                </form>
+
+                                <div class="table-responsive">
+                                    <table id="recent-orders"
+                                        class="table table-hover mb-0 ps-container ps-theme-default">
+                                        <thead>
+                                            <tr>
+                                                <th>{{traduction.langue.listcampagne}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let campagne of campagnes" class="member">
+                                                <td class="text-truncate" (click)="selectCampagne(campagne)">
+                                                    {{campagne.campagne.nom}}</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">{{traduction.langue.list_formulaire_planification}}</h4>
+                            <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="table-responsive">
+                                <table id="recent-orders" class="table table-hover mb-0 ps-container ps-theme-default">
+                                    <thead>
+                                        <tr>
+                                            <th>{{traduction.langue.campagne}}</th>
+                                            <th>{{traduction.langue.date}}</th>
+                                            <th>{{traduction.langue.etat}}</th>
+                                            <th>{{traduction.langue.action}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let planification of planifications">
+                                            <td class="text-truncate">{{planification.campagne.nom}}</td>
+                                            <td class="text-truncate">{{planification.datePlanification |
+                                                date:'dd/MM/yyyy HH:mm'}}</td>
+                                            <td class="text-truncate">{{planification.etat}}</td>
+                                            <td class="text-truncate">
+                                                <a data-toggle="modal" title="{{traduction.langue.supprimer}}"
+                                                    data-target="#default" (click)="selectPlanification(planification)"
+                                                    class="todo-item-delete" style="margin-right: 1rem;"><i
+                                                        class="fa fa-trash text-danger"></i></a>
+
+                                                <a title="{{traduction.langue.modifier}}"
+                                                    (click)="selectPlanification2(planification)" class="todo-item-update"
+                                                    style="margin-right: 1rem;"><i
+                                                        class="fa fa-edit text-primary"></i></a>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- END: Content-->
+
+
+
+
+<!-- Modal HTML -->
+<div id="default" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fa fa-trash text-danger"></i>
+                </div>
+
+                <h4 class="modal-title"> {{traduction.langue.headerdelete}} </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p> {{traduction.langue.messagedelete}} </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal"> {{traduction.langue.btncancel}}
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deletePlanification()">
+                    {{traduction.langue.btndelete}} </button>
+            </div>
+        </div>
+    </div>
+</div>

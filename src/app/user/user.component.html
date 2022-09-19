@@ -1,0 +1,171 @@
+
+
+
+ <!-- BEGIN: Content-->
+ <div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+                <div class="row">
+                        <div class="col-md-4">
+                                <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">{{traduction.langue.add_formulaire_user}}</h4>       
+                                            <span class="text-danger" *ngIf="erreursaisie">* tous les champs sont obligatoires</span>                 
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="card-body">
+                                                  
+                                                        <form [formGroup]="userForm">
+                
+                
+                                                                <div class="form-group">
+                                                                    <label for="username">{{traduction.langue.nom}}</label>
+                                                                    <input type="text" formControlName="nom" class="form-control"/>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="prenom">{{traduction.langue.prenom}}</label>
+                                                                    <input type="text" formControlName="prenom" class="form-control"  />
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="email">{{traduction.langue.email}}</label>
+                                                                    <input type="text" formControlName="email" class="form-control"/>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="username">{{traduction.langue.login}}</label>
+                                                                    <input type="text" formControlName="username" class="form-control" autocomplete="off"  name="username" />
+                                                                </div>
+                                                                <div class="form-group">
+                                                                        <label for="password">{{traduction.langue.password}}</label>
+                                                                        <input type="password" formControlName="password" class="form-control" autocomplete="new-password"/>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                        <label for="exampleFormControlSelect1">{{traduction.langue.role}}</label>
+                                                                        <select class="form-control" formControlName="role" >
+                                                                            <option selected value="Administrateur">Administrateur</option>
+                                                                            <option value="Utilisateur">Utilisateur</option>
+                                                                        </select>
+                                                            
+                                                                </div>
+                
+                                                                <div class="form-group">
+                                                                        
+                                                               
+
+                                                                    <label for="exampleFormControlSelect1">{{traduction.langue.etat}}</label>
+                                                                    <select class="form-control" formControlName="enable" >
+                                                                        <option selected value="true">Actif</option>
+                                                                        <option value="false">Inactif</option>
+                                                                    </select>
+
+                                                                                                                    
+                                                                </div>
+                                                            
+                                                                <div class="form-row">
+                                                                        <div class="col-md-4 mb-3" *ngIf="!edit">
+                                                                                <button  class="btn btn-primary" (click)="onSubmit()">{{traduction.langue.ajouter}}</button>
+                                                                        </div>
+                                                                        <div class="col-md-4 mb-3" *ngIf="edit">
+                                                                                <button  class="btn btn-primary" (click)="onSubmitEdit()">{{traduction.langue.modifier}}</button>
+                                                                        </div>
+                                                                        <div class="col-md-4 mb-3" *ngIf="!edit">
+                                                                                <button  class="btn btn-secondary" (click)="onReset()">{{traduction.langue.effacer}}</button>
+                                                                        </div>
+                                                                        <div class="col-md-4 mb-3" *ngIf="edit">
+                                                                                <button  class="btn btn-secondary" (click)="onReset()">{{traduction.langue.annuler}}</button>
+                                                                        </div>
+                                                                </div>
+                                                            </form>
+                
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                        </div>
+                        <div class="col-md-8">
+                                <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">{{traduction.langue.list_formulaire_user}}</h4>
+                                            <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                                            <div class="heading-elements">
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="card-body" *ngIf="users">
+                                                <p>Total Users {{users.length}} . </p>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table id="recent-orders" class="table table-hover mb-0 ps-container ps-theme-default">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{{traduction.langue.nom}}</th>
+                                                            <th>{{traduction.langue.prenom}}</th>
+                                                            <th>{{traduction.langue.email}}</th>
+                                                            <th>{{traduction.langue.login}}</th>
+                                                            <th>{{traduction.langue.role}}</th>
+                                                            <th>{{traduction.langue.etat}}</th>
+                                                            <th>{{traduction.langue.action}}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let user of users">
+                                                            <td class="text-truncate">{{user.nom}}</td>
+                                                            <td class="text-truncate">{{user.prenom}}</td>
+                                                            <td class="text-truncate"><a href="#">{{user.email}}</a></td>
+                                                            <td class="text-truncate">{{user.username}}</td>
+                                                            <td class="text-truncate"><span class="badge badge-success">{{user.role}}</span></td>
+                                                            <td class="text-truncate" *ngIf="user.enable">Actif</td>
+                                                            <td class="text-truncate" *ngIf="!user.enable">Inactif</td>
+                                                          
+                                                            <td class="text-truncate">
+                                                                <a data-toggle="modal" title="{{traduction.langue.supprimer}}" data-target="#default" (click)="deleteUser(user)" class="todo-item-delete" style="margin-right: 1rem;"><i class="fa fa-trash text-danger"></i></a>
+                                                                <a  (click)="editUser(user)" title="{{traduction.langue.modifier}}" class="todo-item-delete"><i class="fa fa-edit text-info"></i></a>
+                                                            
+                                                            </td>
+                                                        </tr>
+                                                     
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <br>
+                                            <br>
+                                        </div>
+                                    </div>
+                                
+                
+                        </div>
+                    
+                </div>
+
+        </div>
+    </div>
+</div>
+<!-- END: Content-->
+
+
+
+
+<!-- Modal HTML -->
+<div id="default" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="icon-box">
+                            <i class="fa fa-trash text-danger"></i>
+                    </div>		
+                  	
+                    <h4 class="modal-title"> {{traduction.langue.headerdelete}} </h4>	
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p> {{traduction.langue.messagedelete}} </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal"> {{traduction.langue.btncancel}} </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteUserConfirm(userDelete)"> {{traduction.langue.btndelete}} </button>
+                </div>
+            </div>
+        </div>
+    </div>  

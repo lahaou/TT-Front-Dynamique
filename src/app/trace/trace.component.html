@@ -1,0 +1,112 @@
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+
+
+
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Traçabilité</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+
+                        <form [formGroup]="resultForm">
+
+
+                            <div class="row">
+
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="prenom">{{traduction.langue.datede}}</label>
+                                        <input type="date" formControlName="dateDebut" class="form-control"
+                                            [(ngModel)]="dateDebut" name="dateDebut" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="prenom">{{traduction.langue.datefin}}</label>
+                                        <input type="date" formControlName="dateFin" class="form-control"
+                                            [(ngModel)]="dateFin" name="dateFin" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3" *ngIf="currentUser?.role == 'Administrateur'">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1"><b>Utilisateurs</b></label>
+                                        <select class="form-control" (change)="getUser($event)">
+                                            <option  value="0">Tous les utilisateurs </option>
+                                            <option *ngFor="let user of users;" value="{{user.id}}">{{user.nom}} {{user.prenom}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="username" style="color: white;">.</label>
+                                        <button type="button" class="btn btn-info form-control" style="color: white"
+                                            (click)="onSubmit()">{{traduction.langue.search}}</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+
+                <div class="card-header">
+                    <h4 class="card-title">
+                        <span>Info</span>
+                    </h4>
+
+                    <a data-action="autre">
+                        <i class="ft-file" (click)="exportAsXLSX()"
+                            style="float: right ;margin-right: 1rem;margin-left: 1rem;"> Excel </i>
+                    </a>
+                    <a data-action="autre">
+                        <i class="ft-file" (click)="exportAsPDF()"
+                            style="float: right ;margin-right: 1rem;margin-left: 1rem;"> PDF </i>
+                    </a>
+
+                </div>
+
+
+                <div class="card-content">
+                    <div class="card-body">
+
+                        <div class="table-responsive">
+                            <table id="recent-orders" class="table table-hover mb-0 ps-container ps-theme-default">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Utilisateur</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let log of trace">
+                                        <td class="text-truncate">{{log?.date | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                        <td class="text-truncate">{{log?.utilisateur?.prenom}} {{log?.utilisateur?.nom}}</td>
+                                        <td class="text-truncate" style=" white-space: normal;">
+
+                                            {{log?.action}}
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

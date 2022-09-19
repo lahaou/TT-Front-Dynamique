@@ -1,0 +1,215 @@
+﻿  
+      <!-- BEGIN: Header-->
+
+      <nav class="header-navbar navbar-expand-md navbar navbar-with-menu fixed-top navbar-semi-light bg-gradient-x-grey-blue" *ngIf="loginpage">
+            <div class="navbar-wrapper">
+                    <div class="navbar-header">
+                        <ul class="nav navbar-nav flex-row">
+                            <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" ><i class="ft-menu font-large-1"></i></a></li>
+                            <li class="nav-item"><a class="navbar-brand" routerLink="/home"><img class="brand-logo" alt="stack admin logo" src="assets/app-assets/images/logo/stack-logo.png">
+                                    <h2 class="brand-text">Tariffs Tracker</h2>
+                                </a></li>
+                            <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="fa fa-ellipsis-v"></i></a></li>
+                        </ul>
+                    </div>
+              
+                    <!--*****************************-->
+                    <div class="navbar-container content">
+                            <div class="collapse navbar-collapse" id="navbar-mobile">
+                                    <ul class="nav navbar-nav mr-auto float-left">
+                                            <li class="nav-item d-none d-md-block" title="{{traduction.langue.menu}}"><a class="nav-link nav-menu-main menu-toggle hidden-xs" ><i class="ft-menu"></i></a></li>      
+                                            
+                                            <li class="nav-item" title="{{traduction.langue.utilitaireSIM}}"><a class="nav-link  hidden-xs" routerLink="/menuSim" ><i class="ft-sliders"></i></a></li>    
+                                            <li *ngIf="currentUser?.role == 'Administrateur'" class="nav-item" title="Paramètre"><a class="nav-link  hidden-xs" routerLink="/param" ><i class="fa fa-cog"></i></a></li>     
+                                                           
+                                    </ul>
+
+                                 
+
+                                    <ul class="nav navbar-nav float-right">
+                                            <li *ngIf="false" class="dropdown dropdown-language nav-item"><a class="dropdown-toggle nav-link" id="dropdown-flag"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i *ngIf="traduction.nomLangue=='en'" class="flag-icon flag-icon-gb"></i>
+                                                <i *ngIf="traduction.nomLangue=='fr'" class="flag-icon flag-icon-fr"></i>
+                                                
+                                                <span class="selected-language"></span></a>
+                                                <div class="dropdown-menu" aria-labelledby="dropdown-flag">
+                                                    <a class="dropdown-item" (click)="switchLangue('en')"><i class="flag-icon flag-icon-gb"></i> English</a>
+                                                    <a class="dropdown-item" selected (click)="switchLangue('fr')"><i class="flag-icon flag-icon-fr"></i> French</a>
+                                                </div>
+                                            </li>
+
+                                            <li class="dropdown dropdown-user nav-item">
+                                                    <a class="dropdown-toggle nav-link dropdown-user-link"  data-toggle="dropdown" style="margin-top: 5px;">
+                                                        
+                                                        {{currentUser.username}}
+                                                        </a>
+                            
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                           
+                                                        <a class="dropdown-item" >
+                                                          
+                                                            <a class="dropdown-item"  (click)="authenticationService?.logout()"><i class="ft-power"></i>{{traduction.langue.logout}}</a>
+                                                        </a>
+                                                        </div>
+                                            </li>
+                                           
+                                            
+                                    </ul>
+
+                                        
+                            </div>
+                        </div>
+    <!--*****************************-->
+
+                </div>
+        </nav>
+        <!-- END: Header-->
+
+
+
+      
+
+  <!-- END: Header-->
+    <!-- END: Header-->
+   <!-- BEGIN: Main Menu-->
+   <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true" *ngIf="loginpage">
+        <div class="main-menu-content">
+            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+                <li class=" navigation-header"><span>{{traduction.langue.general}}</span><i class=" ft-minus" data-toggle="tooltip" data-placement="right" data-original-title=""></i>
+                </li>
+
+
+
+
+                <li class=" nav-item"><a routerLink="/home" ><i class="ft-home"></i><span class="menu-title" data-i18n="">{{traduction.langue.dashboard}}</span></a></li>
+            <li class=" nav-item"><a routerLink="/sim" ><i class="ft-smartphone"></i><span class="menu-title" data-i18n="">{{traduction.langue.sim}}</span></a></li>
+
+
+
+                <li class=" nav-item" *ngIf="currentUser?.role == 'Administrateur'"> <a><i class="ft-user"></i><span class="menu-title" data-i18n="">Administration</span></a>
+                    <ul class="menu-content">
+                        <li class=" nav-item" *ngIf="currentUser?.role == 'Administrateur'"><a routerLink="/operateur" ><i class="ft-target"></i><span class="menu-title" data-i18n="">{{traduction.langue.operateurs}}</span></a></li>
+                        <li class=" nav-item" *ngIf="currentUser.role == 'Administrateur'"><a routerLink="/offre" ><i class="ft-globe"></i><span class="menu-title" data-i18n="">{{traduction.langue.offre}}</span></a></li>
+                        <li class=" nav-item" *ngIf="currentUser.role == 'Administrateur'"><a routerLink="/serveurFTP" ><i class="ft-server"></i><span class="menu-title" data-i18n="">{{traduction.langue.serveurftp}}</span></a></li>
+                        <li class=" nav-item" *ngIf="currentUser.role == 'Administrateur'"><a routerLink="/user" ><i class="ft-users"></i><span class="menu-title" data-i18n="">{{traduction.langue.user}}</span></a></li>
+                        <li class=" nav-item" *ngIf="currentUser.role == 'Administrateur'"><a routerLink="/gestion" ><i class="ft-clipboard"></i><span class="menu-title" data-i18n="">{{traduction.langue.gestionoffreoperateur}}</span></a></li>
+                        <li class=" nav-item" *ngIf="currentUser?.role == 'Administrateur'"><a routerLink="/log" ><i class="fa fa-slack"></i><span class="menu-title" data-i18n="">Scénario log</span></a></li>
+                   
+                    </ul>
+                </li>
+
+
+
+               
+                <li class=" nav-item"><a><i class="ft-link"></i><span class="menu-title" data-i18n="">{{traduction.langue.scenarios}}</span></a>
+                    <ul class="menu-content">
+                            <li><a class="menu-item" routerLink="/scenario" >{{traduction.langue.gestionscenario}}</a></li>
+                            <li><a class="menu-item" routerLink="/tache" >{{traduction.langue.gestiontache}}</a></li>
+                   
+                    </ul>
+                </li>
+                <li class=" nav-item"><a routerLink="/campagne" ><i class="ft-layers"></i><span class="menu-title" data-i18n="">{{traduction.langue.campagne}}</span></a></li>
+                <li class=" nav-item"><a routerLink="/planification" ><i class="ft-calendar"></i><span class="menu-title" data-i18n="">{{traduction.langue.planification}}</span></a></li>
+                <li class=" nav-item"><a routerLink="/resultat" ><i class="ft-list"></i><span class="menu-title" data-i18n="">{{traduction.langue.resultat}}</span></a></li>
+                <li class=" nav-item" ><a routerLink="/trace" ><i class="fa fa-wpforms"></i><span class="menu-title" data-i18n="">Traçabilité</span></a></li>
+                <li class=" nav-item" ><a routerLink="/execution" ><i class="fa fa-paper-plane-o"></i><span class="menu-title" data-i18n="">Exécution</span></a></li>
+               
+                 
+            </ul>
+        </div>
+    </div>
+    <!-- END: Main Menu-->
+
+
+
+
+
+
+<!-- Modal HTML -->
+<div id="default-confirmation" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p class="text-center"><i class="fa fa-check-circle text-success" style="font-size: 50px;"></i>	</p>
+                    <p class="text-center">{{traduction.langue.messageconfirmation}}</p>          
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+
+    <div id="default-confirmation2" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p class="text-center">Sélectionnez l'offre correspondante</p>          
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger btn-block" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <div id="default-confirmation3" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p class="text-center">Sélectionnez un scénario</p>          
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger btn-block" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+
+    <div id="default-exist" class="modal fade" style=" z-index: 100000;">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h1 class="text-center"id="titremodal"></h1>          
+                    <p class="text-center" id="messagemodal"></p>    
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+
+
+    <router-outlet></router-outlet>
+
+
+<!-- END: Content-->
+
+<div class="sidenav-overlay" *ngIf="loginpage"></div>
+<div class="drag-target" *ngIf="loginpage"></div>
+
+<!-- BEGIN: Footer-->
+<footer class="footer footer-static footer-dark navbar-border" *ngIf="loginpage">
+<p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright &copy; 2021 <a class="text-bold-800 grey darken-2">Tariffs Tracker </a></span></p>
+</footer>
+<!-- END: Footer-->
+
+
+
+
+
+
+
+
+    
+          
+
+
+
+
+
+   

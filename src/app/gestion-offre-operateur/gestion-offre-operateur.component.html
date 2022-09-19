@@ -1,0 +1,139 @@
+
+
+
+ <!-- BEGIN: Content-->
+ <div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="row">
+                <div class="col-md-12">
+           
+                                <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">{{traduction.langue.list_formulaire_gestionoffreoperateur}}</h4>                    
+                                        </div>
+                                        <div class="card-content">
+
+                                            <div class="card-body">
+
+                          
+                                             
+                                                <form [formGroup]="OperateurForm">
+                                                    <div class="form-group">
+                                                            <label for="exampleFormControlSelect1" >{{traduction.langue.operateur}}</label>
+                                                            <select class="form-control browser-default custom-select"  formControlName="operateur" (change)="ChangingValue()" >
+                                                                <option *ngFor="let op of operateurs;"  value="{{op.id}}"> {{op.nom}}</option>                             
+                                                            </select>
+                                                
+                                                    </div>
+                                                </form>
+                                        
+
+
+                                                <div class="form-group">
+                                                        {{traduction.langue.listeoffreselectionner}}:<br><br>
+                                                  <span  *ngFor="let offre of offersSelected" class="badge badge-danger  itemhover" style="min-width: 15rem;margin-right: 5px;" (click)="deleteFromlist(offre)"> <i class="ft-trash" style="float: left;"></i> {{offre.nom}}</span>
+
+                                                  <hr>
+                                                  {{traduction.langue.listeoffre}}:<br><br>
+
+                                                  <span *ngFor="let offre of offres" class="badge badge-primary itemhover1" style="min-width: 15rem;margin-right: 5px;" (click)="addTolist(offre)"> <i class="ft-check" style="float: left;"></i> {{offre.nom}}</span>
+                                                  
+
+                                                  <hr>
+                                                  {{traduction.langue.listeoffreassocier}}:<br><br>
+                                                  <span *ngFor="let offre of OffresAssocie;" class="badge badge-info itemhover2" style="min-width: 15rem;margin-right: 5px;" (click)="selectOffre(idOperateur,offre)" data-toggle="modal"  data-target="#default"> <i class="ft-trash" style="float: left;"></i> {{offre.nom}}</span>
+                                                  
+
+                                                </div>  
+
+                                                <div class="form-row">
+                                                    <div class="col-md-2 mb-3" >
+                                                            <button  class="btn btn-secondary" (click)="addOffreoperateur()"> {{traduction.langue.ajouter}}</button>
+                                                    </div> 
+                                                    <div class="col-md-2 mb-3" >
+                                                            <button  class="btn btn-secondary" (click)="listoffreparoperateur()" data-toggle="modal" data-target="#listOffres"> Visualiser</button>
+                                                    </div> 
+                                                </div>
+
+
+                                               
+                                              </div>  
+
+                                         
+                                     
+
+                                               
+                                            </div>
+                                        </div>
+                                    
+                </div>
+
+            
+              </div>
+                 
+
+        </div>
+    </div>
+</div>
+<!-- END: Content-->
+
+
+
+<!-- Modal HTML -->
+<div id="default" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="icon-box">
+                            <i class="fa fa-trash text-danger"></i>
+                    </div>		
+                  	
+                    <h4 class="modal-title"> {{traduction.langue.headerdelete}} </h4>	
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p> {{traduction.langue.messagedelete}} </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal"> {{traduction.langue.btncancel}} </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteoffre(idOperateur,Offre)" > {{traduction.langue.btndelete}} </button>
+                </div>
+            </div>
+        </div>
+    </div>  
+
+
+        <!-- Modal HTML -->
+<div id="listOffres" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <h2 style="color: black;"><b>{{traduction.langue.list_offre_par_operateur}}</b> </h2>
+
+           
+           
+         
+
+
+
+            <div class="modal-body" *ngIf="listoffreOperateur.length>0">
+                <div *ngFor="let item of listoffreOperateur;">
+                               
+                <ul class="list-group">
+                        <li class="list-group-item active" style="color:black;font-size: 40dp;padding: 0rem 0rem;"><b>{{item.operateur.nom}}</b></li>
+                        <li *ngFor="let offre of item.offres;" class="list-group-item" style="padding: 0rem 0rem;">{{offre.nom}}</li>
+                </ul>
+                <br>
+
+            </div>                                                       
+            
+            </div>
+          
+        </div>
+    </div>
+</div>  
+
+
+

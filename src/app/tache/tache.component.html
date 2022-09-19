@@ -1,0 +1,724 @@
+<!-- BEGIN: Content-->
+<div class="app-content content">
+  <div class="content-wrapper">
+    <div class="content-header row">
+    </div>
+    <div class="content-body">
+      <div class="row">
+        <div class="col-md-4">
+          <form ngNativeValidate [formGroup]="taskForm" (submit)="onSubmit()">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">{{traduction.langue.add_formulaire_tache}}</h4>
+              </div>
+              <div class="card-content">
+                <div class="card-body">
+                  <div class="alert alert-danger" role="alert" *ngIf="stateErreur">{{messageErreue}}</div>
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1"><b>{{traduction.langue.scenario}}</b></label>
+                    <select class="form-control" formControlName="scenario" (change)="valueChangeScenario()" required>
+                      <option *ngFor="let scenario of scenarios;" value="{{scenario.id}}">{{scenario.nom}}</option>
+                    </select>
+                  </div>
+
+                  <div class="row">
+
+
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="exampleFormControlSelect1">{{traduction.langue.typetache}}</label>
+
+                        <select class="form-control" (change)="valueChange()" formControlName="typeTache" required>
+                          <option value="VOIX">
+                            VOIX
+                          </option>
+                          <option value="SMS">
+                            SMS
+                          </option>
+                          <option value="FTP">
+                            DATA
+                          </option>
+
+                        </select>
+                      </div>
+
+                    </div>
+
+
+
+
+
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+
+                      <div class="form-group">
+                        <label for="exampleFormControlSelect1">{{traduction.langue.simEmettrice}}</label>
+                        <select class="form-control" formControlName="simEmettrice" (change)="valueChange()"
+                          [(ngModel)]="simEmettrice">
+                          <ng-container *ngFor="let sim of SimsAssocie;">
+                            <option *ngIf="sim.etat=='CONNECTED'" value="{{sim.id}}">
+                              {{sim.msisdn}} ({{sim.note}})
+                            </option>
+                          </ng-container>
+                        </select>
+                      </div>
+
+                    </div>
+
+
+                    <div class="col-md-6" *ngIf="taskForm.value.typeTache=='FTP' ">
+                      <div class="form-group">
+                        <label for="exampleFormControlSelect1">Facturation</label>
+
+                        <select class="form-control" formControlName="facturation" (change)="valueChange()">
+                          <option value="VOLUME">
+                            VOLUME</option>
+                          <option value="INTERNETDIRECT">
+                            INTERNET DIRECT
+                          </option>
+                        </select>
+                      </div>
+
+                    </div>
+
+
+
+
+
+
+
+                    <div class="col-md-6" *ngIf="taskForm.value.typeTache!='FTP' ">
+                      <div class="form-group">
+                        <label for="exampleFormControlSelect1">{{traduction.langue.simDestinataire}}</label>
+
+                        <select class="form-control" formControlName="simDestinataire" (change)="valueChange()"
+                          [(ngModel)]="simDestinataire">
+                          <option value="0">
+                            {{traduction.langue.saisienumero}}
+                          </option>
+                          <ng-container *ngFor="let sim of SimsAssocie;">
+                            <option *ngIf="sim.etat=='CONNECTED'" value="{{sim.id}}">
+                              {{sim.msisdn}} ({{sim.note}})
+                            </option>
+                          </ng-container>
+                        </select>
+                      </div>
+
+                    </div>
+                  </div>
+
+
+                  <div class="row" *ngIf="taskForm.value.simDestinataire=='0' && taskForm.value.typeTache!='FTP'">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="username">{{traduction.langue.numeroDestinataire}}</label>
+                        <input type="text" formControlName="numeroDestinataire" class="form-control" required />
+                      </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="exampleFormControlSelect1">{{traduction.langue.operateur}}</label>
+
+                        <select class="form-control" formControlName="operateur" (change)="valueChange()"
+                          [(ngModel)]="operateur" required>
+                          <option *ngFor="let operateur of operateurs;" value="{{operateur.id}}">
+                            {{operateur.nom}}
+                          </option>
+                        </select>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+
+
+
+
+
+                  <div class="row" *ngIf="taskForm.value.typeTache!='FTP'">
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="exampleFormControlSelect1">{{traduction.langue.contexte}}</label>
+
+                        <select class="form-control" formControlName="contexte">
+                          <option value="ONNET">
+                            ONNET
+                          </option>
+                          <option value="OFFNET">
+                            OFFNET
+                          </option>
+                          <option value="International">
+                            International
+                          </option>
+                        </select>
+                      </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="username"
+                          *ngIf="taskForm.value.typeTache!='VOIX' && taskForm.value.typeTache!='SMS'">Durée (sec) /
+                          Nombre</label>
+                        <label for="username" *ngIf="taskForm.value.typeTache=='VOIX'">Durée (sec)</label>
+                        <label for="username" *ngIf="taskForm.value.typeTache=='SMS'">Nombre</label>
+
+                        <input type="number" min="1" formControlName="dureeNombre" class="form-control" />
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="username">{{traduction.langue.nombreIteration}}</label>
+                        <input type="number" min="1" formControlName="nombreIteration" class="form-control"
+                          name="nombreIteration" />
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="username">{{traduction.langue.tempsInterIteration}} (sec)</label>
+                        <input type="number" min="5" formControlName="tempsInterIteration" class="form-control"
+                          name="tempsInterIteration" />
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+
+
+
+
+                  <div class="row"
+                    *ngIf="taskForm.value.typeTache!='FTP' || taskForm.value.facturation=='INTERNETDIRECT' ">
+
+
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="exampleFormControlSelect1">{{traduction.langue.tarification}} (FCFA)</label>
+
+                        <select class="form-control" formControlName="tarification" required>
+                          <option *ngFor="let tarification of tarifications;" value="{{tarification.id}}">
+                            {{tarification.libelle}}
+                            ({{tarification.tarif}})
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                  </div>
+
+
+
+
+                  <div class="row" *ngIf="taskForm.value.typeTache=='FTP'">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="exampleFormControlSelect1">{{traduction.langue.fichier}}</label>
+
+                        <select class="form-control" formControlName="fichier">
+                          <option value="F_0M5">
+                            F_0M5
+                          </option>
+                          <option value="F_0M75">
+                            F_0M75
+                          </option>
+                          <option value="F_1M">
+                            F_1M
+                          </option>
+                          <option value="F_1M3">
+                            F_1M3
+                          </option>
+                          <option value="F_2M">
+                            F_2M
+                          </option>
+                          <option value="F_2M5">
+                            F_2M5
+                          </option>
+                          <option value="F_3M">
+                            F_3M
+                          </option>
+                          <option value="F_4M">
+                            F_4M
+                          </option>
+                          <option value="F_5M">
+                            F_5M
+                          </option>
+                          <option value="F_5M8">
+                            F_5M8
+                          </option>
+                          <option value="F_6M">
+                            F_6M
+                          </option>
+
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+
+                      <div class="form-group">
+                        <label for="exampleFormControlSelect1">{{traduction.langue.serveurFTP}}</label>
+
+                        <select class="form-control" formControlName="serveurFTP" required>
+                          <option *ngFor="let serveur of serveurFTPs;" value="{{serveur.id}}">
+                            {{serveur.nom}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="username">Temps
+                          avant USSD
+                          (s)</label>
+                        <input type="number" min="5" formControlName="tempsAvantUSSD" class="form-control" />
+                      </div>
+
+                    </div>
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                      <button type="submit" class="btn btn-primary">{{traduction.langue.ajouter}}</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+
+
+            </div>
+          </form>
+
+
+
+
+
+        </div>
+
+
+
+        <div class="col-md-8">
+
+
+          <div class="col-md-12">
+
+            <div class="card">
+
+              <div class="card-header">
+                <h4 class="card-title">
+                  {{traduction.langue.list_formulaire_sim}}</h4>
+                <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                <div class="heading-elements">
+                  <ul class="list-inline mb-0">
+                    <li title="{{traduction.langue.reload}}" (click)="reloadSIM()"><a data-action="reload"><i
+                          class="ft-rotate-cw"></i></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="card-content">
+
+                <div class="card-body">
+
+
+                  <div class="table-responsive">
+                    <table id="recent-orders" class="table table-striped table-bordered table-sm" cellspacing="0"
+                      width="100%">
+
+                      <thead>
+                        <tr>
+                          <th>{{traduction.langue.portSim}}
+                          </th>
+                          <th>{{traduction.langue.msisdn}}
+                          </th>
+                          <th>{{traduction.langue.operateur}}
+                          </th>
+                          <th>{{traduction.langue.offre}}
+                          </th>
+                          <th>{{traduction.langue.imsi}}
+                          </th>
+                          
+                          <th>{{traduction.langue.etat}}
+                          </th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+
+
+                        <ng-container *ngFor="let sim of SimsAssocie">
+                          <ng-container *ngIf="sim.etat == 'CONNECTED'">
+                            <tr>
+                              <td class="text-truncate">
+                                {{sim?.portSim}}
+                              </td>
+                              <td class="text-truncate">
+                                {{sim?.msisdn}} ({{sim?.note}})
+                              </td>
+                              <td class="text-truncate">
+                                {{sim?.operateur?.nom}}
+                              </td>
+                              <td class="text-truncate">
+                                {{sim?.offre?.nom}}
+                              </td>
+                              <td class="text-truncate">
+                                {{sim?.imsi}}
+                              </td>
+                              
+                              <td class="text-truncate" (click)="selectSim(sim)">
+                                <span class="badge badge-success">{{traduction.langue.connected}}</span>
+                              </td>
+                            </tr>
+                          </ng-container>
+                        </ng-container>
+
+
+
+
+                      </tbody>
+                    </table>
+                  </div>
+
+
+
+
+                </div>
+
+
+
+
+
+              </div>
+            </div>
+
+          </div>
+
+
+
+          <div class="col-md-12">
+
+            <div class="card">
+
+              <div class="card-header">
+                <h4 class="card-title">
+                  {{traduction.langue.list_formulaire_tache}}</h4>
+                <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                <div class="heading-elements">
+                  <ul class="list-inline mb-0">
+
+                    <li (click)="switchInfo('VOIX')"><a data-action="voix"><i class="ft-phone-call"></i>VOIX</a></li>
+                    <li (click)="switchInfo('SMS')"><a data-action="sms"><i class="icon-envelope"></i>SMS</a></li>
+                    <li (click)="switchInfo('FTP')"><a data-action="ftp"><i class="ft-at-sign"></i>DATA</a></li>
+
+                  </ul>
+                </div>
+              </div>
+              <div class="card-content">
+
+                <div class="card-body">
+
+
+                  <div class="table-responsive" *ngIf="switch=='VOIX'">
+                    <table id="recent-orders" class="table table-striped table-bordered table-sm" cellspacing="0"
+                      width="100%">
+
+                      <thead>
+                        <tr>
+                          <th>{{traduction.langue.nom}}
+                          </th>
+                          <th>{{traduction.langue.simEmettrice}}
+                          </th>
+                          <th>{{traduction.langue.simDestinataire}}
+                          </th>
+                          <th>{{traduction.langue.nombreIteration}}
+                          </th>
+                          <th>{{traduction.langue.tempsInterIteration}}
+                          </th>
+                          <th>{{traduction.langue.contexte}}
+                          </th>
+                          <th>{{traduction.langue.dureeNombre}}
+                          </th>
+                          <th>{{traduction.langue.tarification}}
+                          </th>
+
+                          <th>Action</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+
+
+                        <ng-container *ngFor="let task of taches">
+                          <tr *ngIf="task.typeTache=='VOIX'">
+                            <td class="text-truncate">
+                              {{task?.scenario?.nom}}
+                            </td>
+                            <td class="text-truncate">
+                              {{task?.simEmettrice?.msisdn}}
+                            </td>
+                            <td class="text-truncate">
+                              {{task?.simDestinataire?.msisdn}}
+                              {{task?.numeroDestinataire}}
+                            </td>
+
+                            <td class="text-truncate">
+                              {{task?.nombreIteration}}
+                            </td>
+                            <td class="text-truncate">
+                              {{task?.tempsInterIteration}}
+                            </td>
+                            <td class="text-truncate">
+                              {{task?.contexte}}
+                            </td>
+                            <td class="text-truncate">
+                              {{task?.dureeNombre}}
+                            </td>
+                            <td class="text-truncate">
+                              {{task?.tarification?.libelle}}
+                            </td>
+                            <td data-toggle="modal" data-target="#deletetaskmodal" (click)="deleteTask(task.id)"><a> <i
+                                  class="fa fa-trash text-danger"></i></a></td>
+
+
+
+                          </tr>
+                        </ng-container>
+
+
+
+
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="table-responsive" *ngIf="switch=='SMS'">
+                    <table id="recent-orders" class="table table-striped table-bordered table-sm" cellspacing="0"
+                      width="100%">
+
+                      <thead>
+                        <tr>
+                          <th>{{traduction.langue.nom}}
+                          </th>
+                          <th>{{traduction.langue.simEmettrice}}
+                          </th>
+                          <th>{{traduction.langue.simDestinataire}}
+                          </th>
+                          <th>{{traduction.langue.nombreIteration}}
+                          </th>
+                          <th>{{traduction.langue.tempsInterIteration}}
+                          </th>
+                          <th>{{traduction.langue.contexte}}
+                          </th>
+                          <th>{{traduction.langue.dureeNombre}}
+                          </th>
+                          <th>{{traduction.langue.tarification}}
+                          </th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+
+                        <ng-container *ngFor="let task of taches">
+                          <tr *ngIf="task.typeTache=='SMS'">
+                            <td class="text-truncate">
+                              {{task?.scenario?.nom}}
+                            </td>
+                            <td class="text-truncate">
+                              {{task?.simEmettrice?.msisdn}}
+                            </td>
+                            <td class="text-truncate">
+                              {{task?.simDestinataire?.msisdn}}
+                              {{task?.numeroDestinataire}}
+                            </td>
+
+                            <td class="text-truncate">
+                              {{task?.nombreIteration}}
+                            </td>
+                            <td class="text-truncate">
+                              {{task?.tempsInterIteration}}
+                            </td>
+                            <td class="text-truncate">
+                              {{task?.contexte}}
+                            </td>
+                            <td class="text-truncate">
+                              {{task?.dureeNombre}}
+                            </td>
+                            <td class="text-truncate">
+                              {{task?.tarification?.libelle}}
+                            </td>
+                            <td data-toggle="modal" data-target="#deletetaskmodal" (click)="deleteTask(task.id)"><a> <i
+                                  class="fa fa-trash text-danger"></i></a></td>
+                          </tr>
+                        </ng-container>
+
+
+
+
+                      </tbody>
+                    </table>
+                  </div>
+
+
+
+
+                  <div class="table-responsive" *ngIf="switch=='FTP'">
+                    <table id="recent-orders" class="table table-striped table-bordered table-sm" cellspacing="0"
+                      width="100%">
+
+                      <thead>
+                        <tr>
+                          <th>{{traduction.langue.scenario}}
+                          </th>
+                          <th>{{traduction.langue.simEmettrice}}
+                          </th>
+                          <th>{{traduction.langue.nombreIteration}}
+                          </th>
+                          <th>{{traduction.langue.tempsInterIteration}}
+                          </th>
+                          <th>Temps avant
+                            USSD
+                          </th>
+
+                          <th>{{traduction.langue.fichier}}
+                          </th>
+                          <th>{{traduction.langue.serveurFTP}}
+                          </th>
+
+                          <th>Action</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+
+
+                        <ng-container *ngFor="let task of taches">
+                          <tr *ngIf="task.typeTache=='FTP'">
+                            <td class="text-truncate">
+                              {{task?.scenario?.nom}}
+                            </td>
+                            <td class="text-truncate">
+                              {{task?.simEmettrice?.msisdn}}
+                            </td>
+
+
+                            <td class="text-truncate">
+                              {{task?.nombreIteration}}
+                            </td>
+                            <td class="text-truncate">
+                              {{task?.tempsInterIteration}}
+                            </td>
+                            <td class="text-truncate">
+                              {{task?.tempsAvantUSSD}}
+                            </td>
+                            <td class="text-truncate">
+                              {{task?.fichier}}
+                            </td>
+                            <td class="text-truncate">
+                              {{task?.serveurFTP?.nom}}
+                            </td>
+
+
+                            <td data-toggle="modal" data-target="#deletetaskmodal" (click)="deleteTask(task.id)"><a> <i
+                                  class="fa fa-trash text-danger"></i></a></td>
+
+                          </tr>
+                        </ng-container>
+
+
+
+
+                      </tbody>
+                    </table>
+                  </div>
+
+
+
+
+                </div>
+
+
+
+
+
+              </div>
+            </div>
+
+          </div>
+
+
+
+
+
+
+        </div>
+
+
+      </div>
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal HTML -->
+<div id="deletetaskmodal" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="icon-box">
+          <i class="fa fa-trash text-danger"></i>
+        </div>
+
+        <h4 class="modal-title"> {{traduction.langue.headerdelete}} </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p> {{traduction.langue.messagedelete}} </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal"> {{traduction.langue.btncancel}}
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteTaskwithId()">
+          {{traduction.langue.btndelete}} </button>
+      </div>
+    </div>
+  </div>
+</div>

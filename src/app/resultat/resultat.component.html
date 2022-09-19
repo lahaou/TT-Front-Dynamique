@@ -1,0 +1,814 @@
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+
+
+
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title" >{{traduction.langue.resutatscenarios}}
+                
+                            <ul class="list-inline" style="float: right;">
+                               
+                                <li (click)="switchInfo('VOIX')" style="margin-right: 1rem;"><a data-action="autre"><i class="ft-phone-call"></i>
+                                        VOIX </a></li>
+                                <li (click)="switchInfo('SMS')" style="margin-right: 1rem;"><a data-action="autre"><i class="ft-message-square"></i>
+                                        SMS </a></li>
+                                        <li (click)="switchInfo('FTP')" style="margin-right: 1rem;"><a data-action="data"><i class="ft-at-sign"></i> FTP </a>
+                                        </li>
+                                        <li (click)="switchInfo('HTTP')" style="margin-right: 1rem;"><a data-action="data"><i class="ft-at-sign"></i> HTTP </a>
+                                        </li>
+                                        <li (click)="switchInfo('STREAMING')" style="margin-right: 1rem;"><a data-action="data"><i class="ft-at-sign"></i> STREAMING </a>
+                                        </li>
+                            </ul>
+                      
+
+                    </h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+
+                        <form [formGroup]="resultForm">
+
+
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label
+                                            for="exampleFormControlSelect1"><b>{{traduction.langue.scenario}}</b></label>
+
+                                        <select class="form-control" formControlName="idScenario"
+                                            (change)="valueChangeScenario()">
+                                            <option *ngFor="let scenario of Scenarios;" value="{{scenario.id}}">
+                                                <span style="font-size:40px;" *ngIf="scenario.mobile">📱 </span> 
+                                                <span style="font-size:40px;" *ngIf="!scenario.mobile">💻 </span> 
+                                                {{scenario.nom}}      
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="prenom">{{traduction.langue.datede}}</label>
+                                        <input type="datetime-local" formControlName="dateDebut" class="form-control"
+                                            [(ngModel)]="dateDebut" name="dateDebut" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="prenom">{{traduction.langue.datefin}}</label>
+                                        <input type="datetime-local" formControlName="dateFin" class="form-control"
+                                            [(ngModel)]="dateFin" name="dateFin" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="username" style="color: white;">.</label>
+                                        <button type="button" class="btn btn-info form-control" style="color: white"
+                                            (click)="onSubmit()">{{traduction.langue.search}}</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
+                <div class="card-header">
+                    <h4 class="card-title"><a data-action="autre" *ngIf="scenario"> {{scenario?.scenario || ''}}</a>
+
+                        <span *ngIf="status=='VOIX'"> ( VOIX )</span>
+                        <span *ngIf="status=='SMS'"> ( SMS )</span>
+                        <span *ngIf="status=='FTP'"> ( FTP )</span>
+                        <span *ngIf="status=='STREAMING'"> ( STREAMING )</span>
+                        <span *ngIf="status=='HTTP'"> ( HTTP )</span>
+
+
+                    </h4>
+
+                    <a data-action="autre" *ngIf="scenario">
+                        <i class="ft-file" (click)="exportAsXLSX()"
+                            style="float: right ;margin-right: 1rem;margin-left: 1rem;" *ngIf="scenario"> Excel </i>
+                    </a>
+                    <a data-action="autre" *ngIf="scenario">
+                        <i class="ft-file" (click)="expot()" style="float: right ;margin-right: 1rem;margin-left: 1rem;"
+                            *ngIf="scenario"> PDF </i>
+                    </a>
+                    <a data-action="autre" *ngIf="scenario">
+                        <i class="ft-bar-chart-2" style="float: right" (click)="showBarFn();"> Graphe </i>
+                    </a>
+
+
+
+
+                  
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+
+
+
+                        <div class="table-responsive" *ngIf="status=='VOIX'">
+
+                            <div style="width: 40%;margin: auto">
+
+                                <canvas *ngIf="showBar" id="tt" style="background-color: white;width: 200px;" baseChart
+                                    [datasets]="barChartVar" [labels]="barChartLabelsv" [options]="barChartOptionsv"
+                                    [legend]="barChartLegendv" [chartType]="barChartTypev"  [colors]="colorsbar"></canvas>
+                                <br>
+                            </div>
+
+                            <table id="recent-orders" class="table table-hover mb-0 ps-container ps-theme-default">
+                                <thead>
+                                    <tr>
+
+                                        <th>{{traduction.langue.contexte}}</th>
+                                        <th>{{traduction.langue.operateur}} /{{traduction.langue.Offre}} /
+                                            {{traduction.langue.simEmettrice}}</th>
+                                        <th>{{traduction.langue.operateur}} /{{traduction.langue.Offre}} /
+                                            {{traduction.langue.simDestinataire}}</th>
+                                        <th>{{traduction.langue.resultat}}</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let task of tacheVoix">
+                                        <td class="text-truncate">{{task.tacheVoixDTO.contexte}}</td>
+
+                                        <td class="text-truncate">{{task.tacheVoixDTO.operateurEmetteur}} /
+                                            {{task.tacheVoixDTO.offreEmetteur}} / {{task.tacheVoixDTO.simEmettrice}}
+                                        </td>
+                                        <td class="text-truncate">{{task.tacheVoixDTO.operateurDestinataire}} /
+                                            {{task.tacheVoixDTO.offreDestinataire}} /
+                                            {{task.tacheVoixDTO.simDestinataire}}</td>
+
+
+                                        <td class="text-truncate" title="{{traduction.langue.visualiser}}">
+                                            <i data-toggle="modal" data-target="#default"
+                                                (click)="getResultVoix(task.resultatVoixDTOs,task.tacheVoixDTO.operateurEmetteur)"
+                                                class="fa fa-eye text-warning"
+                                                title="{{traduction.langue.visualiser}}"></i>
+
+                                            <i (click)="chartGLOB(task.tacheVoixDTO.id,'VOIX')"
+                                                class="ft-bar-chart-2 text-warning" style="margin-left: 10px;"
+                                                title="{{traduction.langue.graphe}}"></i>
+
+
+
+
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table-responsive" *ngIf="status=='SMS'">
+
+                            <div style="width: 40%;margin: auto">
+
+                                <canvas *ngIf="showBar" id="tt" style="background-color: white;width: 200px;" baseChart
+                                    [datasets]="barChartVar" [labels]="barChartLabelsv" [options]="barChartOptionsv"
+                                    [legend]="barChartLegendv" [chartType]="barChartTypev"  [colors]="colorsbar"></canvas>
+
+                                <br>
+                            </div>
+
+
+
+
+                            <table id="recent-orders" class="table table-hover mb-0 ps-container ps-theme-default">
+                                <thead>
+                                    <tr>
+                                        <th>{{traduction.langue.contexte}}</th>
+                                        <th>{{traduction.langue.operateur}} /{{traduction.langue.Offre}} /
+                                            {{traduction.langue.simEmettrice}}</th>
+                                        <th>{{traduction.langue.operateur}} /{{traduction.langue.Offre}} /
+                                            {{traduction.langue.simDestinataire}}</th>
+                                        <th>{{traduction.langue.resultat}}</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let task of tacheSMS">
+
+
+                                        <td class="text-truncate">{{task.tacheSMSDTO.contexte}}</td>
+
+                                        <td class="text-truncate">{{task.tacheSMSDTO.operateurEmetteur}} /
+                                            {{task.tacheSMSDTO.offreEmetteur}} / {{task.tacheSMSDTO.simEmettrice}}</td>
+                                        <td class="text-truncate">{{task.tacheSMSDTO.operateurDestinataire}} /
+                                            {{task.tacheSMSDTO.offreDestinataire}} /
+                                            {{task.tacheSMSDTO.simDestinataire}}</td>
+                                        <td class="text-truncate" title="{{traduction.langue.visualiser}}">
+                                            <i (click)="getResultSMS(task.resultatSMSDTOs,task.tacheSMSDTO.operateurEmetteur)"
+                                                data-target="#default" data-toggle="modal"
+                                                class="fa fa-eye text-warning"
+                                                title="{{traduction.langue.visualiser}}"></i>
+                                            <i (click)="chartGLOB(task.tacheSMSDTO.id,'SMS')"
+                                                class="ft-bar-chart-2 text-warning" style="margin-left: 10px;"
+                                                title="{{traduction.langue.graphe}}"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table-responsive" *ngIf="status=='FTP'">
+                            <div style="width: 40%;margin: auto">
+                                <canvas *ngIf="showBar" id="tt" style="background-color: white;width: 200px;" baseChart
+                                    [datasets]="barChartVar" [labels]="barChartLabelsv" [options]="barChartOptionsv"
+                                    [legend]="barChartLegendv" [chartType]="barChartTypev" [colors]="colorsbar"></canvas>
+                                <br>
+                            </div>
+                            <table id="recent-orders" class="table table-hover mb-0 ps-container ps-theme-default">
+                                <thead>
+                                    <tr>
+                                        <th>{{traduction.langue.fichier}}</th>
+                                        <th>{{traduction.langue.operateur}} /{{traduction.langue.Offre}} /
+                                            {{traduction.langue.simEmettrice}}</th>
+                                        <th>{{traduction.langue.serveurFTP}}</th>
+                                        <th>{{traduction.langue.resultat}}</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let task of tacheFTP">
+
+                                        <td class="text-truncate">{{task.tacheDataDTO.fichierTelecharge}}</td>
+                                        <td class="text-truncate">{{task.tacheDataDTO.operateurEmetteur}} /
+                                            {{task.tacheDataDTO.offreEmetteur}} / {{task.tacheDataDTO.simEmettrice}}
+                                        </td>
+                                        <td class="text-truncate">{{task.tacheDataDTO.adresseServeur}}</td>
+
+                                        <td class="text-truncate" title="{{traduction.langue.visualiser}}">
+                                            <i (click)="getResultData(task.resultatDataDTOs,task.tacheDataDTO.operateurEmetteur)"
+                                                data-target="#default" data-toggle="modal"
+                                                class="fa fa-eye text-warning"
+                                                title="{{traduction.langue.visualiser}}"></i>
+                                            <i (click)="chartGLOB(task.tacheDataDTO.id,'FTP')"
+                                                class="ft-bar-chart-2 text-warning" style="margin-left: 10px;"
+                                                title="{{traduction.langue.graphe}}"></i>
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table-responsive" *ngIf="status=='HTTP'">
+                            <div style="width: 40%;margin: auto">
+                                <canvas *ngIf="showBar" id="tt" style="background-color: white;width: 200px;" baseChart
+                                    [datasets]="barChartVar" [labels]="barChartLabelsv" [options]="barChartOptionsv"
+                                    [legend]="barChartLegendv" [chartType]="barChartTypev"  [colors]="colorsbar"></canvas>
+                                <br>
+                            </div>
+                            <table id="recent-orders" class="table table-hover mb-0 ps-container ps-theme-default">
+                                <thead>
+                                    <tr>
+                                       
+                                        <th>{{traduction.langue.operateur}} /{{traduction.langue.Offre}} /
+                                            {{traduction.langue.simEmettrice}}</th>
+                                        <th>{{traduction.langue.serveurFTP}}</th>
+                                        <th>{{traduction.langue.resultat}}</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let task of tacheHTTP">
+
+                                      
+                                        <td class="text-truncate">{{task.tacheDataDTO.operateurEmetteur}} /
+                                            {{task.tacheDataDTO.offreEmetteur}} / {{task.tacheDataDTO.simEmettrice}}
+                                        </td>
+                                        <td class="text-truncate">{{task.tacheDataDTO.adresseServeur}}</td>
+
+                                        <td class="text-truncate" title="{{traduction.langue.visualiser}}">
+                                            <i (click)="getResultData(task.resultatDataDTOs,task.tacheDataDTO.operateurEmetteur)"
+                                                data-target="#default" data-toggle="modal"
+                                                class="fa fa-eye text-warning"
+                                                title="{{traduction.langue.visualiser}}"></i>
+                                            <i (click)="chartGLOB(task.tacheDataDTO.id,'HTTP')"
+                                                class="ft-bar-chart-2 text-warning" style="margin-left: 10px;"
+                                                title="{{traduction.langue.graphe}}"></i>
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table-responsive" *ngIf="status=='STREAMING'">
+                            <div style="width: 40%;margin: auto">
+                                <canvas *ngIf="showBar" id="tt" style="background-color: white;width: 200px;" baseChart
+                                    [datasets]="barChartVar" [labels]="barChartLabelsv" [options]="barChartOptionsv"
+                                    [legend]="barChartLegendv" [chartType]="barChartTypev"  [colors]="colorsbar"></canvas>
+                                <br>
+                            </div>
+                            <table id="recent-orders" class="table table-hover mb-0 ps-container ps-theme-default">
+                                <thead>
+                                    <tr>
+                                       
+                                        <th>{{traduction.langue.operateur}} /{{traduction.langue.Offre}} /
+                                            {{traduction.langue.simEmettrice}}</th>
+                                        <th>{{traduction.langue.serveurFTP}}</th>
+                                        <th>{{traduction.langue.resultat}}</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let task of tacheSTREAM">
+
+                                        <td class="text-truncate">{{task.tacheDataDTO.operateurEmetteur}} /
+                                            {{task.tacheDataDTO.offreEmetteur}} / {{task.tacheDataDTO.simEmettrice}}
+                                        </td>
+                                        <td class="text-truncate">{{task.tacheDataDTO.adresseServeur}}</td>
+
+                                        <td class="text-truncate" title="{{traduction.langue.visualiser}}">
+                                            <i (click)="getResultData(task.resultatDataDTOs,task.tacheDataDTO.operateurEmetteur)"
+                                                data-target="#default" data-toggle="modal"
+                                                class="fa fa-eye text-warning"
+                                                title="{{traduction.langue.visualiser}}"></i>
+                                            <i (click)="chartGLOB(task.tacheDataDTO.id,'STREAMING')"
+                                                class="ft-bar-chart-2 text-warning" style="margin-left: 10px;"
+                                                title="{{traduction.langue.graphe}}"></i>
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <table class="ok"></table>
+
+            <div class="one"></div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- Modal HTML -->
+<div id="default" class="modal fade" >
+    <div class="modal-dialog modal-confirm" >
+        <div class="modal-content" style="width:100%;">
+            <div class="modal-header">
+                <h4 class="modal-title">{{traduction.langue.resultats}} </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body" style="height: 80%;">
+                <div class="table-responsive" *ngIf="status=='VOIX'">
+                    <table id="recent-orders" class="table table-hover mb-0 ps-container ps-theme-default">
+                        <thead>
+                            <tr>
+                               
+                                <th>{{traduction.langue.dateDebut}}</th>
+                                <th>{{traduction.langue.datefin}}</th>
+                                <th>Roaming</th>
+                                <th>{{traduction.langue.tarifAnnonce}}</th>
+                                <th>{{traduction.langue.unite}}</th>
+                                <th>{{traduction.langue.duree}}</th>
+                                <th >Temps Opérateur</th>
+                                <th >{{traduction.langue.coutTheorique}}</th>
+                                <th >Cout Théorique (Temps Opérateur)</th>
+                                <th>Nom du Compte</th>
+                                <th>Solde initial</th>
+                                <th>Solde final</th>
+                                <th>Variation</th>
+                        
+                                <th>{{traduction.langue.etat}}</th>
+
+                            </tr>
+                        </thead>
+                        <tbody *ngIf='resultatVoix'>
+                            <tr *ngFor="let result of resultatVoix">
+                             
+                                <td class="text-truncate">{{result.dateDebut | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                <td class="text-truncate">{{result.datefin | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                <td class="text-truncate" *ngIf="result.roaming">Oui</td>
+                                <td class="text-truncate" *ngIf="!result.roaming">Non</td>
+                                <td class="text-truncate">{{result.tarifAnnonce}}</td>
+                                <td class="text-truncate" *ngIf="result.unite==-1">Appel</td>
+                                <td class="text-truncate" *ngIf="result.unite!=-1">{{result.unite}}</td>
+                                <td class="text-truncate">{{result.duree}}</td>
+                                <td class="text-truncate">{{result.tempsOperateur}}</td>
+                                <td class="text-truncate">{{result.coutTheorique | number:'1.1-2'}}</td>
+                                <td class="text-truncate">{{result.coutTheoriqueTempsOperateur | number:'1.1-2'}}</td>
+
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;">{{compte.compte }}</div>
+                                    </ng-container>
+                                </td>
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;" *ngIf="compte.initiale">{{compte.initiale | number:'1.1-2'}}</div>
+                                        <div style="width: 100%;" *ngIf="compte.initiale==null">-</div>
+                                        <div style="width: 100%;" *ngIf="compte.initiale==0">0</div>
+                                    </ng-container>
+                                </td>
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;" *ngIf="compte.finale">{{compte.finale | number:'1.1-2'}}</div>
+                                        <div style="width: 100%;" *ngIf="compte.finale==null">-</div>
+                                        <div style="width: 100%;" *ngIf="compte.finale==0">0</div>
+                                    </ng-container>
+                                </td>
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;" *ngIf="compte.variation">{{compte.variation | number:'1.1-2'}}</div>
+                                        <div style="width: 100%;" *ngIf="compte.variation==null">-</div>
+                                        <div style="width: 100%;" *ngIf="compte.variation==0">0</div>
+                                    </ng-container>
+                                </td>
+
+
+
+                                <td class="text-truncate" *ngIf="result.etat=='SUCCES'"><span
+                                        class="badge badge-success">{{result.etat}}</span></td>
+                                <td class="text-truncate" *ngIf="result.etat!='SUCCES'"><span
+                                        class="badge badge-danger">{{result.etat}}</span></td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-responsive" *ngIf="status=='SMS'">
+                    <table id="recent-orders" class="table table-hover mb-0 ps-container ps-theme-default">
+                        <thead>
+                            <tr>
+                                <th>{{traduction.langue.dateDebut}}</th>
+                                <th>{{traduction.langue.datefin}}</th>
+                                <th>Roaming</th>
+                                <th>{{traduction.langue.tarifAnnonce}}</th>
+                                <th>{{traduction.langue.nombre}}</th>
+                                <th>{{traduction.langue.coutTheorique}}</th>
+
+                                <th>Nom du Compte</th>
+                                <th>Solde initial</th>
+                                <th>Solde final</th>
+                                <th>Variation</th>
+
+                                <th>{{traduction.langue.etat}}</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody *ngIf='resultatSMS'>
+                            <tr *ngFor="let result of resultatSMS">
+                                <td class="text-truncate">{{result.dateDebut | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                <td class="text-truncate">{{result.datefin | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                <td class="text-truncate" *ngIf="result.roaming">Oui</td>
+                                <td class="text-truncate" *ngIf="!result.roaming">Non</td>
+                                <td class="text-truncate">{{result.tarifAnnonce}}</td>
+                                <td class="text-truncate">{{result.nombre}}</td>
+                                <td class="text-truncate">{{result.coutTheorique | number:'1.1-2'}}</td>
+
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;">{{compte.compte }}</div>
+                                    </ng-container>
+                                </td>
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;" *ngIf="compte.initiale">{{compte.initiale | number:'1.1-2'}}</div>
+                                        <div style="width: 100%;" *ngIf="compte.initiale==null">-</div>
+                                        <div style="width: 100%;" *ngIf="compte.initiale==0">0</div>
+                                    </ng-container>
+                                </td>
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;" *ngIf="compte.finale">{{compte.finale | number:'1.1-2'}}</div>
+                                        <div style="width: 100%;" *ngIf="compte.finale==null">-</div>
+                                        <div style="width: 100%;" *ngIf="compte.finale==0">0</div>
+                                    </ng-container>
+                                </td>
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;" *ngIf="compte.variation">{{compte.variation | number:'1.1-2'}}</div>
+                                        <div style="width: 100%;" *ngIf="compte.variation==null">-</div>
+                                        <div style="width: 100%;" *ngIf="compte.variation==0">0</div>
+                                    </ng-container>
+                                </td>
+
+
+
+
+
+                                <td class="text-truncate" *ngIf="result.etat=='SUCCES'"><span
+                                        class="badge badge-success">{{result.etat}}</span></td>
+                                <td class="text-truncate" *ngIf="result.etat!='SUCCES'"><span
+                                        class="badge badge-danger">{{result.etat}}</span></td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="table-responsive" *ngIf="status=='FTP'">
+                    <table id="recent-orders" class="table table-hover mb-0 ps-container ps-theme-default">
+                        <thead>
+                            <tr>
+                                <th>{{traduction.langue.dateEx}}</th>
+                                <th>{{traduction.langue.volumeTheorique}} (Mo)</th>
+
+
+                                <th>Nom du Compte</th>
+                                <th>Solde initial</th>
+                                <th>Solde final</th>
+                                <th>Variation</th>
+
+                           
+
+
+
+                                <th>{{traduction.langue.tempsReel}}</th>
+                                <th>{{traduction.langue.etat}}</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody *ngIf='resultatData'>
+                            <tr *ngFor="let result of resultatData">
+                                <td class="text-truncate">{{result.dateExecution | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                <td class="text-truncate">{{result.volumeTheorique | number:'1.1-3'}}</td>
+                               
+
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;">{{compte.compte }}</div>
+                                    </ng-container>
+                                </td>
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;" *ngIf="compte.initiale">{{compte.initiale | number:'1.1-2'}}</div>
+                                        <div style="width: 100%;" *ngIf="compte.initiale==null">-</div>
+                                        <div style="width: 100%;" *ngIf="compte.initiale==0">0</div>
+                                    </ng-container>
+                                </td>
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;" *ngIf="compte.finale">{{compte.finale | number:'1.1-2'}}</div>
+                                        <div style="width: 100%;" *ngIf="compte.finale==null">-</div>
+                                        <div style="width: 100%;" *ngIf="compte.finale==0">0</div>
+                                    </ng-container>
+                                </td>
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;" *ngIf="compte.variation">{{compte.variation | number:'1.1-2'}}</div>
+                                        <div style="width: 100%;" *ngIf="compte.variation==null">-</div>
+                                        <div style="width: 100%;" *ngIf="compte.variation==0">0</div>
+                                    </ng-container>
+                                </td>
+
+
+                            
+                                <td class="text-truncate">{{result.duree}} s</td>
+
+                                <td class="text-truncate" *ngIf="result.etat=='SUCCES'"><span
+                                        class="badge badge-success">{{result.etat}}</span></td>
+                                <td class="text-truncate" *ngIf="result.etat!='SUCCES'"><span
+                                        class="badge badge-danger">{{result.etat}}</span></td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-responsive" *ngIf="status=='HTTP'">
+                    <table id="recent-orders" class="table table-hover mb-0 ps-container ps-theme-default">
+                        <thead>
+                            <tr>
+                                <th>{{traduction.langue.dateEx}}</th>
+                                <th>{{traduction.langue.volumeTheorique}} (Mo)</th>
+
+
+                                <th>Nom du Compte</th>
+                                <th>Solde initial</th>
+                                <th>Solde final</th>
+                                <th>Variation</th>
+
+                           
+
+
+
+                                <th>{{traduction.langue.tempsReel}}</th>
+                                <th>{{traduction.langue.etat}}</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody *ngIf='resultatData'>
+                            <tr *ngFor="let result of resultatData">
+                                <td class="text-truncate">{{result.dateExecution | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                <td class="text-truncate">{{result.volumeTheorique | number:'1.1-3'}}</td>
+                               
+
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;">{{compte.compte }}</div>
+                                    </ng-container>
+                                </td>
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;" *ngIf="compte.initiale">{{compte.initiale | number:'1.1-2'}}</div>
+                                        <div style="width: 100%;" *ngIf="compte.initiale==null">-</div>
+                                        <div style="width: 100%;" *ngIf="compte.initiale==0">0</div>
+                                    </ng-container>
+                                </td>
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;" *ngIf="compte.finale">{{compte.finale | number:'1.1-2'}}</div>
+                                        <div style="width: 100%;" *ngIf="compte.finale==null">-</div>
+                                        <div style="width: 100%;" *ngIf="compte.finale==0">0</div>
+                                    </ng-container>
+                                </td>
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;" *ngIf="compte.variation">{{compte.variation | number:'1.1-2'}}</div>
+                                        <div style="width: 100%;" *ngIf="compte.variation==null">-</div>
+                                        <div style="width: 100%;" *ngIf="compte.variation==0">0</div>
+                                    </ng-container>
+                                </td>
+
+
+                            
+                                <td class="text-truncate">{{result.duree}} s</td>
+
+                                <td class="text-truncate" *ngIf="result.etat=='SUCCES'"><span
+                                        class="badge badge-success">{{result.etat}}</span></td>
+                                <td class="text-truncate" *ngIf="result.etat!='SUCCES'"><span
+                                        class="badge badge-danger">{{result.etat}}</span></td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-responsive" *ngIf="status=='STREAMING'">
+                    <table id="recent-orders" class="table table-hover mb-0 ps-container ps-theme-default">
+                        <thead>
+                            <tr>
+                                <th>{{traduction.langue.dateEx}}</th>
+                                <th>{{traduction.langue.volumeTheorique}} (Mo)</th>
+
+
+                                <th>Nom du Compte</th>
+                                <th>Solde initial</th>
+                                <th>Solde final</th>
+                                <th>Variation</th>
+
+                           
+
+
+
+                                <th>{{traduction.langue.tempsReel}}</th>
+                                <th>{{traduction.langue.etat}}</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody *ngIf='resultatData'>
+                            <tr *ngFor="let result of resultatData">
+                                <td class="text-truncate">{{result.dateExecution | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                <td class="text-truncate">{{result.volumeTheorique | number:'1.1-3'}}</td>
+                               
+
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;">{{compte.compte }}</div>
+                                    </ng-container>
+                                </td>
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;" *ngIf="compte.initiale">{{compte.initiale | number:'1.1-2'}}</div>
+                                        <div style="width: 100%;" *ngIf="compte.initiale==null">-</div>
+                                        <div style="width: 100%;" *ngIf="compte.initiale==0">0</div>
+                                    </ng-container>
+                                </td>
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;" *ngIf="compte.finale">{{compte.finale | number:'1.1-2'}}</div>
+                                        <div style="width: 100%;" *ngIf="compte.finale==null">-</div>
+                                        <div style="width: 100%;" *ngIf="compte.finale==0">0</div>
+                                    </ng-container>
+                                </td>
+                                <td class="text-truncate">
+                                    <ng-container *ngFor="let compte of result.resultatCompteDTOs;"> 
+                                        <div style="width: 100%;" *ngIf="compte.variation">{{compte.variation | number:'1.1-2'}}</div>
+                                        <div style="width: 100%;" *ngIf="compte.variation==null">-</div>
+                                        <div style="width: 100%;" *ngIf="compte.variation==0">0</div>
+                                    </ng-container>
+                                </td>
+
+
+                            
+                                <td class="text-truncate">{{result.duree}} s</td>
+
+                                <td class="text-truncate" *ngIf="result.etat=='SUCCES'"><span
+                                        class="badge badge-success">{{result.etat}}</span></td>
+                                <td class="text-truncate" *ngIf="result.etat!='SUCCES'"><span
+                                        class="badge badge-danger">{{result.etat}}</span></td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- Modal HTML -->
+<div id="default-loader" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content" style="width:100%;">
+            <div class="modal-header">
+                <h4 class="modal-title">{{traduction.langue.genpdf}} ... </h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="spinner-border"></div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

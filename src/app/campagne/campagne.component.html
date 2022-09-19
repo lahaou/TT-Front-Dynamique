@@ -1,0 +1,177 @@
+
+
+
+ <!-- BEGIN: Content-->
+ <div class="app-content content">
+  <div class="content-wrapper">
+      <div class="content-header row">
+      </div>
+      <div class="content-body">
+              <div class="row">
+                      <div class="col-md-4">
+                              <div class="card">
+                                      <div class="card-header">
+                                          <h4 class="card-title">{{traduction.langue.add_formulaire_campagne}}</h4>                    
+                                      </div>
+                                      <div class="card-content">
+                                          <div class="card-body">
+                                                
+                                                      <form [formGroup]="campagneForm">
+              
+              
+                                                              <div class="form-group">
+                                                                  <label for="username">{{traduction.langue.nom}}</label>
+                                                                  <input type="text" formControlName="nom" class="form-control"/>
+                                                              </div>
+                                                     
+              
+                                                              <div class="form-row">
+                                                                      <div class="col-md-4 mb-3">
+                                                                              <button  class="btn btn-primary" (click)="onSubmit()">{{traduction.langue.ajouter}}</button>
+                                                                      </div>
+                                                              </div>
+                                                          </form>
+                                                      <hr>
+
+                                                      <h4>{{traduction.langue.list_formulaire_scenario}}</h4>
+
+                                                      <div class="scrollbar scrollbar-primary" style="margin-top: 1rem;width: 90%;">
+                                                        <div class="force-overflow">
+                                                          <ul>
+                                                            <li *ngFor="let scenario of scenarios;" class="itemhover" (click)="addTolist(scenario)">{{scenario.nom}}</li>
+                                                          
+                                                          </ul>
+                                                        </div>
+                                                      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              
+                                          </div>
+                                      </div>
+                                  </div>
+              
+                      </div>
+
+
+
+
+                      <div class="col-md-8">
+                        <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">{{traduction.langue.scenarioselectionnes}}</h4>                    
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                     
+
+                                        <div class="form-group">
+
+                                      <span  *ngFor="let scenario of scenariosSelected" class="badge badge-primary itemhover1" style="min-width: 10rem;margin-right: 5px;" (click)="deleteFromlist(scenario)"> <i class="ft-trash" style="float: left;"></i>{{scenario.nom}}</span>
+
+                                 
+                                    </div>  
+
+
+
+
+                                    </div>
+                                </div>
+                        </div>
+
+
+
+
+                        <div class="card">
+                          <div class="card-header">
+                              <h4 class="card-title">{{traduction.langue.listscenariosparcampagne}}</h4>                    
+                          </div>
+                          <div class="card-content">
+                              <div class="card-body">
+
+
+
+
+
+                                  <div class="row">
+                                  <div class="form-group col-md-8">
+                                      <label for="exampleFormControlSelect1">{{traduction.langue.campagne}}</label>
+                                      <select class="form-control custom-select"   [ngModel]="camp"  name="camp" (ngModelChange)="test($event)">
+                                          <option *ngFor="let campagne of campagnes;" value="{{campagne.campagne.id}}" >{{campagne.campagne.nom}}</option>
+                                      </select>
+                                  </div>
+
+                                  <div class="form-group col-md-4">
+                                      <label for="exampleFormControlSelect1">.</label>
+                                      <button  class="form-control" class="btn btn-danger form-control"  data-toggle="modal"  data-target="#default">{{traduction.langue.supprimer}}</button>
+                                  </div>
+                                  </div>
+
+
+                                  <hr>
+                             
+                                  <div class="form-group">
+
+                                      <span  *ngFor="let scenario of detail;" class="badge badge-primary" style="width: 10rem;margin-right: 5px;"  data-toggle="modal"  data-target="#default-sce"  (click)="selectScenario(scenario)">{{scenario.nom}}</span>
+
+                                 
+                                    </div>  
+
+
+
+
+
+                              </div>
+                          </div>
+                  </div>
+
+                      </div>
+              </div>
+
+      </div>
+  </div>
+</div>
+<!-- END: Content-->
+
+
+   
+
+
+<!-- Modal HTML -->
+<div id="default" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="icon-box">
+                            <i class="fa fa-trash text-danger"></i>
+                    </div>		
+                  	
+                    <h4 class="modal-title"> {{traduction.langue.headerdelete}} </h4>	
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p> {{traduction.langue.messagedelete}} </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal"> {{traduction.langue.btncancel}} </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteCampagne()" > {{traduction.langue.btndelete}} </button>
+                </div>
+            </div>
+        </div>
+    </div>  

@@ -1,0 +1,412 @@
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <form [formGroup]="taskForm">
+                        <div class="form-group">
+                            <br>
+                            <label for="exampleFormControlSelect1" style="width: 100%;"><b>CHOIX SIM </b>
+
+                                <a data-toggle="modal" data-target="#restart" title="{{traduction.langue.restart}}" style="float: right;"><i class="ft-alert-circle"></i></a>
+                                <a data-toggle="modal" data-target="#cancel" title="Arrêter la session USSD" style="margin-right: 5px;float: right;"><i class="ft-stop-circle"></i></a>
+                                <!-- <a (click)="timeModem()" data-toggle="modal" data-target="#time" title="Date modem" style="margin-left: 10px;"><i class="ft-clock"></i></a>-->
+
+                            </label>
+
+
+                            <select class="form-control" formControlName="portSim"
+                                (change)="valueChange()">
+                                <option *ngFor="let sim of SimsAssocie;" value="{{sim.portSim}}">(Port :
+                                    {{sim?.portSim}} ) {{sim.msisdn}} / {{sim?.operateur?.nom|| '--'}}
+                                </option>
+                            </select>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="col-md-4">
+
+                    <form [formGroup]="taskForm">
+
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+
+                                    <fieldset class="border p-2">
+                                        <legend class="w-auto">Informations sur la SIM</legend>
+                                        <p><b>Opérateur : </b> {{SIM?.operateur?.nom || '--'}}</p>
+                                        <p><b>MSISDN : </b>{{SIM?.msisdn || '--'}}</p>
+                                        <p><b>Offre : </b>{{SIM?.offre?.nom || '--' }}</p>
+
+                                    </fieldset>
+
+                                  
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <fieldset class="border p-2">
+                                    <legend class="w-auto">Message</legend>
+                                    <p style="width: 100%;height:6.5rem; white-space: pre-wrap; overflow-y: scroll;">
+                                        {{USSDmessage}}</p>
+
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-4" style="padding: 0 4px;">
+                                    <div class="form-group">
+                                        <form [formGroup]="taskForm">
+                                            <label for="username">Appel/SMS</label>
+                                            <input type="text" formControlName="SMS" class="form-control" placeholder="Numéro"
+                                                [(ngModel)]="sms" name="sms" />
+                                        </form>
+                                    </div>
+
+                                    </div>
+                                
+                                    <div class="col-4" style="padding: 0 4px;">
+                                    <div class="form-group" data-toggle="modal" data-target="#sendsms">
+                                        <label for="username" style="color: white;">.</label>
+                                        <button class="btn btn-primary form-control">Envoi SMS</button>
+                                    </div>
+
+                                    </div>
+                                    <div class="col-2" style="padding: 0 4px;">
+                                    <div class="form-group">
+                                        <label for="username" style="color: white;">.</label>
+                                        <button type="button" class="btn btn-outline-success form-control" style="padding: 0;"
+                                            (click)="appele(true)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                                                fill="currentColor" class="bi bi-telephone-outbound-fill"
+                                                viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                    d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511zM11 .5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V1.707l-4.146 4.147a.5.5 0 0 1-.708-.708L14.293 1H11.5a.5.5 0 0 1-.5-.5z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    </div>
+                                    <div class="col-2" style="padding: 0 4px;">
+            
+                                    <div class="form-group">
+                                        <label for="username" style="color: white;">.</label>
+                                        <button type="button" class="btn btn-outline-danger form-control"  style="padding: 0;"
+                                            (click)="appele(false)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                                                fill="currentColor" class="bi bi-telephone-x-fill" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                    d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511zm9.261 1.135a.5.5 0 0 1 .708 0L13 2.793l1.146-1.147a.5.5 0 0 1 .708.708L13.707 3.5l1.147 1.146a.5.5 0 0 1-.708.708L13 4.207l-1.146 1.147a.5.5 0 0 1-.708-.708L12.293 3.5l-1.147-1.146a.5.5 0 0 1 0-.708z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-8">
+
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <form [formGroup]="taskForm">
+                                            <label for="username">USSD 
+                                                <i class="fa fa-credit-card" style="margin-left: 1rem;" aria-hidden="true" title="Recharge" data-toggle="modal" data-target="#numerocarte"></i>
+                                                <i class="fa fa-address-book" style="margin-left: 1rem;"  title="Mon numéro" (click)="monNumero()"></i>
+                                            </label>
+                                            <input type="text" formControlName="codeUSSD" class="form-control" placeholder="Code ussd"
+                                                [(ngModel)]="ussdd" name="ussdd" />
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label for="username" style="color: white;">.</label>
+                                        <button class="btn btn-primary form-control"
+                                            (click)="valider()">Valider</button>
+            
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label for="username" style="color: white;">.</label>
+            
+                                        <select class="form-control btn btn-primary" (change)="suiviSolde($event)">
+                                            <option value="0"> Sélectionner un compte</option>
+                                            <option *ngFor="let compte of listComptes;" value="{{compte.id}}">
+                                                {{compte?.nom}}</option>
+                                        </select>
+            
+            
+                                    </div>
+                                </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                   
+
+                </div>
+
+
+                
+
+
+
+
+
+                
+                <div class="col-md-12">
+
+                    <div class="card">
+                        <div class="card-content">
+
+                            <div class="card-header">
+                                <h4 class="card-title">
+                                    <span>Liste SMS</span>
+                                </h4>
+
+                                <a data-action="autre"> <i class="fa fa-refresh" (click)="getSms()"
+                                        style="float: right ;margin-right: 1rem;margin-left: 1rem;"></i></a>
+
+
+                            </div>
+                            <div class="card-body" style="overflow-y: scroll;height: 400px;">
+
+                                <table class="table ps-theme-default">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <!-- <th>Etat</th> -->
+                                            <th>Adresse</th>
+                                            <th>message</th>
+                                            <!-- <th>Action</th>-->
+
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf='SMSmessage'>
+                                        <tr *ngFor="let sms of SMSmessage">
+                                            <td class="text-truncate">{{sms.date | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+                                            <!-- <td class="text-truncate">
+                                                <ng-container *ngIf="sms.stat=='REC_UNREAD'">Non lu</ng-container>
+                                                <ng-container *ngIf="sms.stat=='REC_READ'">Lu</ng-container>
+                                                <ng-container *ngIf="sms.stat=='STO_UNSENT'">Non envoyé</ng-container>
+                                                <ng-container *ngIf="sms.stat=='STO_SENT'">Envoyé</ng-container>
+
+                                            </td> -->
+                                            <td class="text-truncate">{{sms.adresse}}</td>
+                                            <td class="text-truncate" style=" white-space: normal;">{{sms.message}}</td>
+                                            <!--   <td class="text-truncate" style="text-align: center;"
+                                                (click)="deleteSMS(sms.index)">
+                                                <i class="ft-trash"></i>
+
+
+                                            </td>-->
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade text-left" id="numerocarte" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Numéro carte</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form>
+                    <div class="form-group">
+                        <label for="prenom">Saisie numéro carte</label>
+                        <input type="text" [(ngModel)]="numerocarte" name="numerocarte" class="form-control" />
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-outline-primary" (click)="recharge()"
+                    data-dismiss="modal">Confirmer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade text-left" id="sendsms" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">SMS </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form>
+
+                    <div class="form-group">
+                        <label for="prenom" ><span style="font-weight: bold;">Destinataire : </span>{{taskForm.value.SMS}}</label><br>
+                        <label for="prenom" style="font-weight: bold;">Message</label>
+                        <textarea type="text" [(ngModel)]="message" name="numerocarte" class="form-control" rows="4"></textarea>
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-outline-primary" (click)="sendmessage()"
+                    data-dismiss="modal">Envoyer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="modal fade text-left" id="restart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">{{traduction.langue.restartSim}}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-outline-danger" (click)="restart()"
+                    data-dismiss="modal">Confirmer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade text-left" id="cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Arrêter la session USSD</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-outline-danger" (click)="cancel()"
+                    data-dismiss="modal">Confirmer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade text-left" id="time" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Time</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+
+                <div style="margin-left:auto;margin-right:auto;" *ngIf="time">
+                    <h1 style="font-size:50px;text-align:center;"><b> {{time}}</b></h1><br>
+
+                </div>
+
+                <!--
+                                    <ng-container *ngIf="time">
+                                                {{time}}
+                                    </ng-container>
+                          
+            -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>

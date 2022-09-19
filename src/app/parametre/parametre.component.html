@@ -1,0 +1,52 @@
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+           
+
+
+            
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" >Paramètres</h4>
+    
+    
+                        <a data-action="Confirmer" >
+                            <i class="ft-rotate-cw" (click)="valider()"
+                                style="float: right ;margin-right: 1rem;margin-left: 1rem;" ></i>
+                        </a>
+                       
+    
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="row">
+                          
+                            <div class="col-md-4" *ngFor="let param of params;">
+                                <div class="form-group" style="margin-right: 1rem;"  >
+                                       <b>{{param.description}} </b>
+                                       <br>
+                                        <label for="username"> Valeur par défaut ({{param.defaultValue}}) </label>
+                                        <input *ngIf="param.paramName=='ModemUSBIdentifier'" type="text" class="form-control" [(ngModel)]="param.paramValue" name="{{param.paramName}}" />
+                                        <input *ngIf="param.paramName!='ModemUSBIdentifier'" type="number" class="form-control" [(ngModel)]="param.paramValue" name="{{param.paramName}}" />
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                                
+                           
+                        </div>
+
+
+
+                    </div>
+               
+          
+            </div>
+        </div>
+

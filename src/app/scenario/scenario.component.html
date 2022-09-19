@@ -1,0 +1,212 @@
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    
+
+                    <form [formGroup]="scenarioForm">
+
+                        <div class="card">
+
+                            <div class="card-header">
+                                <h4 class="card-title">{{traduction.langue.add_formulaire_scenario}}</h4>
+                                <span class="text-danger" *ngIf="erreursaisie">* tous les champs sont
+                                    obligatoires</span>
+                            </div>
+
+                            <div class="card-content">
+                                <div class="card-body">
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="username">{{traduction.langue.nom}}
+                                                    {{traduction.langue.scenario}}</label>
+                                                <input type="text" formControlName="nom" class="form-control" />
+                                            </div>
+        
+                                        </div>
+                                        <div class="col-md-4">
+                                            
+                                    <div class="form-group">
+                                        <label
+                                            for="exampleFormControlSelect1">{{traduction.langue.enumExecution}}</label>
+                                        <select class="form-control" formControlName="enumExecution">
+                                            <option selected value="SERIE">SERIE</option>
+                                            <option value="PARALLELE">PARALLELE</option>
+                                        </select>
+                                    </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="exampleFormControlSelect1" style="color: white;">.</label>
+                                            <div class="form-row">
+
+                                                <button *ngIf="!edit" class="btn btn-primary" (click)="onSubmit()"
+                                                    style="margin-right: 1rem;">{{traduction.langue.ajouter}}</button>
+                                                <button *ngIf="edit" class="btn btn-primary" (click)="onSubmit()"
+                                                    style="margin-right: 1rem;">{{traduction.langue.modifier}}</button>
+                                                <button class="btn btn-primary" (click)="onReset()"
+                                                    style="margin-right: 1rem;">{{traduction.langue.annuler}}</button>
+                                                <button *ngIf="edit" class="btn btn-danger" data-toggle="modal"
+                                                    data-target="#default">{{traduction.langue.supprimer}}</button>
+        
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+
+
+
+
+                </div>
+
+                <div class="col-md-12">
+
+                    <div class="card">
+
+                        <div class="card-header">
+                            <h4 class="card-title">{{traduction.langue.list_formulaire_scenario}}</h4>
+
+                            <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-content">
+
+                            <div class="card-body">
+
+
+                                <div class="table-responsive">
+                                    <table id="recent-orders" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>{{traduction.langue.nom}}</th>
+
+                                                <th>{{traduction.langue.enumExecution}}</th>
+                                                <th>{{traduction.langue.dateCreation}}</th>
+                                                <th>{{traduction.langue.action}}</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+
+                                            <ng-container *ngFor="let s of Scenarios">
+
+                                                <tr (click)="selectScenario(s)">
+                                                    <td style="width: 20px;"><span style="font-size:20px;" *ngIf="s.mobile">📱 </span> 
+                                                        <span style="font-size:20px;" *ngIf="!s.mobile">💻 </span> </td>
+                                                    <td class="tt" >
+                                                        
+                                                        {{s?.nom}}</td>
+
+                                                    <td class="text-truncate" style="text-align: center;">{{s?.enumExecution}}</td>
+                                                    <td class="text-truncate"><p style="display:none;">{{s?.dateCreation |date: 'yyyy/MM/dd HH:mm'}}</p><p style="text-align: center;">{{s?.dateCreation |date: 'dd/MM/yyyy HH:mm'}}</p></td>
+                                                    <td class="text-truncate" style="text-align: center;"  
+                                                    (click)="execution(s?.id)"
+                                                    data-toggle="modal" data-target="#modal-success" 
+                                                        title="{{traduction.langue.executer}}" >
+                                                        <i class="ft-play"></i>
+                                                    
+                                        
+                                                    </td>
+
+
+                                                </tr>
+
+                                            </ng-container>
+
+
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+
+
+                            </div>
+
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- Modal HTML -->
+<div id="default" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="icon-box">
+                    <i class="fa fa-trash text-danger"></i>
+                </div>
+
+                <h4 class="modal-title"> {{traduction.langue.headerdelete}} </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p> {{traduction.langue.messagedelete}} </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal"> {{traduction.langue.btncancel}}
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="delete(SCENARIO)">
+                    {{traduction.langue.btndelete}} </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modal-success" class="modal modal-message modal-success fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="margin-left: auto;margin-right: auto;display: block;">
+                <i class="fa fa-paper-plane-o"></i>
+            </div>
+            <div class="modal-title">Info</div>
+            <div class="modal-body"> <br> <b>{{message}}</b> <br> <br> Aller vers la section "Exécution" pour suivre l'état d'exécution des scénarios </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+            </div>
+        </div> <!-- / .modal-content -->
+    </div> <!-- / .modal-dialog -->
+</div>
