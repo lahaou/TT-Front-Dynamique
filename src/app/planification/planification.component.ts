@@ -48,6 +48,10 @@ onReset(){
 onSubmit(){
   console.log(this.planificationForm.value);
   this.planificationForm.value.idCampagne=this.CAMPAGNE.campagne.id;
+
+  this.planificationForm.value.datePlanification=moment(
+	this.planificationForm.value.datePlanification).format("YYYY-MM-DDTHH:mmZZ");
+
   if(this.planificationForm.value.idCampagne){
     this.planification.addPlanification(this.planificationForm.value).then((data:any)=>{
       console.log('after add',data)
@@ -78,7 +82,7 @@ selectPlanification(plan){
 update=false;
 selectPlanification2(plan){
   this.datePlanification= moment(plan.datePlanification).format("YYYY-MM-DDTHH:mm");
-  this.planificationForm.value.datePlanification=plan.datePlanification;
+
  this.PLANIFICATION=plan;
  this.update=true;
 }
@@ -88,6 +92,12 @@ annuler(){
 modifier(){
   this.planificationForm.value.idCampagne=this.PLANIFICATION.campagne.id;
   this.planificationForm.value.id=this.PLANIFICATION.id;
+  
+  
+  this.planificationForm.value.datePlanification=moment(
+	this.planificationForm.value.datePlanification).format("YYYY-MM-DDTHH:mmZZ");
+  
+  
   this.planification.deletePlanification(this.PLANIFICATION.id).then((data:any)=>{
     this.planification.addPlanification(this.planificationForm.value).then((data:any)=>{
       this.update=false;

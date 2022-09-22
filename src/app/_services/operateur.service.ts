@@ -64,6 +64,14 @@ export class OperateurService {
           return throwError(
             'Something bad happened; please try again later.');
         };
+
+    nomsOperateurs() {
+        return this.http.get(`${this.env.url}operateursNoms`, this.httpOptions).pipe(retry(0), catchError(this.handleError)).toPromise();
+    }
+
+    listNatureCompte() {
+        return this.http.get(`${this.env.url}natureComptes`, this.httpOptions).pipe(retry(0), catchError(this.handleError)).toPromise();
+    }
     
     getAll() {
         return this.http.get(`${this.env.url}listOperateurs`, this.httpOptions).pipe(retry(0), catchError(this.handleError)).toPromise();

@@ -13,8 +13,6 @@ export class LoginComponent implements OnInit {
     returnUrl: string;
     error = '';
 
-    // click : boolean = false;
-
     constructor(
         private formBuilder: FormBuilder,
         public authenticationService: AuthenticationService,
@@ -32,8 +30,7 @@ export class LoginComponent implements OnInit {
 
     onSubmit() {
         this.authenticationService.login(this.loginForm.value);
-        
-        // .pipe(finalize(() =>  this.click = !this.click));
+
     }
 
 

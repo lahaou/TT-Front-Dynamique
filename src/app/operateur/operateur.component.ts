@@ -26,6 +26,8 @@ export class OperateurComponent implements OnInit {
     retourTempsOperateurForm: FormGroup;
 
     typeValeurs=[];
+    natureComptes=[];
+    nomOperateurs=[];
 
 
     constructor(private operateurService: OperateurService, private formBuilder: FormBuilder, public traduction: TraductionService) { }
@@ -34,11 +36,10 @@ export class OperateurComponent implements OnInit {
         this.resetForm();
         this.onResetcompte();
         this.listeOperateurs();
+        this.listeNomOperateurs();
         this.listTypeValeur();
+        this.listNatureCompte();
     }
-
-
-
 
 
     listTypeValeur(){
@@ -47,7 +48,19 @@ export class OperateurComponent implements OnInit {
         })
     }
 
+    listeNomOperateurs() {
+        this.operateurService.nomsOperateurs().then((data:any) => {
+            this.nomOperateurs = data;
+        });
+    }
 
+    listNatureCompte(){
+        this.operateurService.listNatureCompte().then((data:any)=>{
+            this.natureComptes=data;
+        })
+    }
+
+    
 
 
 
@@ -118,7 +131,6 @@ export class OperateurComponent implements OnInit {
             console.log(operateurs)
         });
     }
-
 
     editOperateur(operateur) {
         this.edit = true;
@@ -398,6 +410,7 @@ selectCompteToUpdate(cp){
         this.compteForm = this.formBuilder.group({
             id: [cp.id, Validators.required],
             code: [cp.ussd.id, Validators.required],
+            nature: [cp.nature, Validators.required],
             nom: [cp.nom, Validators.required],
             prefixe: [cp.prefixe, Validators.required],
             regex: [cp.regex, Validators.required],
@@ -459,6 +472,7 @@ selectCompteToUpdate(cp){
         this.compteForm = this.formBuilder.group({
             id: ['0', Validators.required],
             nom: ['', Validators.required],
+            nature: ['Monnaie', Validators.required],
             code: [0, Validators.required],
             prefixe: ['', Validators.required],
             regex: ['0', Validators.required],
