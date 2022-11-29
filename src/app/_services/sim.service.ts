@@ -83,6 +83,10 @@ SimByOperateur(id){
     return this.http.get(`${this.env.url}listSimsByOperateur/${id}`, this.httpOptions2).pipe(retry(0), catchError(this.handleError)).toPromise();
 }
 
+getContext(sim1,sim2,operateur){
+    return this.http.post(`${this.env.url}contexte`,{"sim1":sim1,"sim2":sim2,"operateur":operateur} ,this.httpOptions2).pipe(retry(0), catchError(this.handleError)).toPromise();
+}
+
 
 
 refreshSIM(){

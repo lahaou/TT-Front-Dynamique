@@ -129,43 +129,80 @@ idTask
     });
   }
 
+
+  cnx="ONNET"
   valueChange(){
-
-    if(this.noOffre){
-      this.taskForm.value.simEmettrice = this.simEmettrice;
-
-    }
-
-
-    this.taskForm.value.simDestinataire = this.simDestinataire;
-    this.taskForm.value.operateur = this.operateur;
-    var object;
-
-
-
-    if(this.taskForm.value.facturation=="INTERNETDIRECT" && this.taskForm.value.typeTache=="FTP" ){
     
-      object={'idSim':this.taskForm.value.simEmettrice, 'idOperateurDestinataire':this.taskForm.value.operateur, 'typeTarification':"DATA"}
-      this.taskService.listTarificationsSimEmOpDestType(object).then((data:any)=>{
-       this.tarifications = data;
-       console.log('tarification --> ',data);
-      })
-    }else if(this.taskForm.value.simDestinataire=='0'){
-       object={'idSim':this.taskForm.value.simEmettrice, 'idOperateurDestinataire':this.taskForm.value.operateur, 'typeTarification':this.taskForm.value.typeTache}
-       this.taskService.listTarificationsSimEmOpDestType(object).then((data:any)=>{
-        this.tarifications = data;
-       })
+   
+    
+      if(this.taskForm.value.simDestinataire=='0'){
+        this.sim.getContext(this.taskForm.value.simEmettrice,0,this.operateur).then((data:any)=>{
+          this.cnx=data.reponse;
+          this.taskForm.value.contexte=data.reponse;
+        })
+      }else{
+        this.sim.getContext(this.taskForm.value.simEmettrice,this.taskForm.value.simDestinataire,null).then((data:any)=>{
+          this.cnx=data.reponse;
+          this.taskForm.value.contexte=data.reponse;
+        })
+      }
 
-    }else{
-      this.SimsAssocie.forEach(element => {
-        if(element.id==this.taskForm.value.simDestinataire){
-           object={'idSim':this.taskForm.value.simEmettrice, 'idOperateurDestinataire':element.operateur.id, 'typeTarification':this.taskForm.value.typeTache}
-           this.taskService.listTarificationsSimEmOpDestType(object).then((data:any)=>{
-            this.tarifications = data;
-           })
-        }
-      });
+   
+
+
+    if(this.taskForm.value.simEmettrice!=0){
+      
+
+      if(this.noOffre){
+        this.taskForm.value.simEmettrice = this.simEmettrice;
+  
+      }
+  
+  
+      this.taskForm.value.simDestinataire = this.simDestinataire;
+      this.taskForm.value.operateur = this.operateur;
+      var object;
+
+      if(this.taskForm.value.simDestinataire=='0'){
+        this.sim.getContext(this.taskForm.value.simEmettrice,0,this.operateur).then((data:any)=>{
+          this.cnx=data.reponse;
+          this.taskForm.value.contexte=data.reponse;
+        })
+      }else{
+        this.sim.getContext(this.taskForm.value.simEmettrice,this.taskForm.value.simDestinataire,null).then((data:any)=>{
+          this.cnx=data.reponse;
+          this.taskForm.value.contexte=data.reponse;
+        })
+      }
+  
+  
+  
+      if(this.taskForm.value.facturation=="INTERNETDIRECT" && this.taskForm.value.typeTache=="FTP" ){
+      
+        object={'idSim':this.taskForm.value.simEmettrice, 'idOperateurDestinataire':this.taskForm.value.operateur, 'typeTarification':"DATA"}
+        this.taskService.listTarificationsSimEmOpDestType(object).then((data:any)=>{
+         this.tarifications = data;
+         console.log('tarification --> ',data);
+        })
+      }else if(this.taskForm.value.simDestinataire=='0'){
+         object={'idSim':this.taskForm.value.simEmettrice, 'idOperateurDestinataire':this.taskForm.value.operateur, 'typeTarification':this.taskForm.value.typeTache}
+         this.taskService.listTarificationsSimEmOpDestType(object).then((data:any)=>{
+          this.tarifications = data;
+         })
+  
+      }else{
+        this.SimsAssocie.forEach(element => {
+          if(element.id==this.taskForm.value.simDestinataire){
+             object={'idSim':this.taskForm.value.simEmettrice, 'idOperateurDestinataire':element.operateur.id, 'typeTarification':this.taskForm.value.typeTache}
+             this.taskService.listTarificationsSimEmOpDestType(object).then((data:any)=>{
+              console.log('tarification --> ',data);
+              this.tarifications = data;
+             })
+          }
+        });
+      }
     }
+
 
   }
 
@@ -176,6 +213,7 @@ onSubmit(){
   console.log("test")
 
   if(this.taskForm.value.facturation=="VOLUME" && this.taskForm.value.typeTache=='FTP'){this.taskForm.value.tarification=0}
+
         if(this.typeScenarioSelected=='PARALLELE'){
 
 
@@ -190,7 +228,7 @@ onSubmit(){
                 this.taskService.addTask(this.taskForm.value).then((data:any)=>{
                   this.taches=data.taches;
                   this.idSimsUtilises=data.idSimsUtilises;
-                  this.valueChangeScenario();
+                 // this.valueChangeScenario();
                   $('#default-confirmation').modal('show');
                  })
 
@@ -200,7 +238,7 @@ onSubmit(){
               this.taskService.addTask(this.taskForm.value).then((data:any)=>{
                 this.taches=data.taches;
                 this.idSimsUtilises=data.idSimsUtilises;
-                this.valueChangeScenario();
+             //   this.valueChangeScenario();
                 $('#default-confirmation').modal('show');
                });
 
@@ -229,7 +267,7 @@ onSubmit(){
 
                 this.taches=data.taches;
                 this.idSimsUtilises=data.idSimsUtilises;
-                this.valueChangeScenario();
+               // this.valueChangeScenario();
                 $('#default-confirmation').modal('show');
                })
 
@@ -241,7 +279,7 @@ onSubmit(){
               console.log(data)
               this.taches=data.taches;
               this.idSimsUtilises=data.idSimsUtilises;
-              this.valueChangeScenario();
+              //this.valueChangeScenario();
               $('#default-confirmation').modal('show');
              })
 
@@ -270,8 +308,10 @@ listServeurFTP() {
 listOperateur() {
     this.operateurService.getAll().then((data: any) => {
       this.operateurs = data;
+      console.log(this.operateurs)
       if(data[0]) {
         this.operateur = data[0].id;
+        console.log(this.operateur)
       }
     });
   }
@@ -327,6 +367,7 @@ if(data.taches.length==0 && data.taches.length==0 ){
     if(this.taskForm.value.facturation=="INTERNETDIRECT" && this.taskForm.value.typeTache=="FTP" ){
     
       object={'idSim':this.taskForm.value.simEmettrice, 'idOperateurDestinataire':this.taskForm.value.operateur, 'typeTarification':"DATA"}
+
       this.taskService.listTarificationsSimEmOpDestType(object).then((data:any)=>{
        this.tarifications = data;
        console.log('tarification --> ',data);
@@ -383,13 +424,13 @@ if(data.taches.length==0 && data.taches.length==0 ){
     
       object={'idSim':this.taskForm.value.simEmettrice, 'idOperateurDestinataire':this.taskForm.value.operateur, 'typeTarification':"DATA"}
       this.taskService.listTarificationsSimEmOpDestType(object).then((data:any)=>{
-       this.tarifications = data;
+      // this.tarifications = data;
        console.log('tarification --> ',data);
       })
     }else if(this.taskForm.value.simDestinataire=='0'){
        object={'idSim':this.taskForm.value.simEmettrice, 'idOperateurDestinataire':this.taskForm.value.operateur, 'typeTarification':this.taskForm.value.typeTarification}
        this.taskService.listTarificationsSimEmOpDestType(object).then((data:any)=>{
-        this.tarifications = data;
+     //   this.tarifications = data;
        })
 
     }else{
@@ -397,7 +438,7 @@ if(data.taches.length==0 && data.taches.length==0 ){
         if(element.id==this.taskForm.value.simDestinataire){
            object={'idSim':this.taskForm.value.simEmettrice, 'idOperateurDestinataire':element.operateur.id, 'typeTarification':this.taskForm.value.typeTarification}
            this.taskService.listTarificationsSimEmOpDestType(object).then((data:any)=>{
-            this.tarifications = data;
+        //    this.tarifications = data;
            })
         }
       });
