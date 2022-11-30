@@ -162,18 +162,20 @@
                                     </div>
                                 </div>
                                 <div class="col-4">
+                           
                                     <div class="form-group">
                                         <label for="username" style="color: white;">.</label>
             
                                         <select class="form-control btn btn-primary" (change)="suiviSolde($event)">
                                             <option value="0"> Sélectionner un compte</option>
-                                            <option *ngFor="let compte of listComptes;" value="{{compte.id}}">
-                                                {{compte?.nom}}</option>
+                                            <option *ngFor="let compte of listComptes;" value="{{ compte.id }}"
+                                            title="{{compte.nomsCompte}}" >{{compte?.code}}</option>
                                         </select>
             
             
                                     </div>
                                 </div>
+                                                              
                                 </div>
 
                             </div>

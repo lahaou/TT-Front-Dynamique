@@ -67,40 +67,39 @@
     }
 
 
-    test
-    
+  
 listComptes=[];
     valueChange(){
       console.log(this.taskForm.value.portSim);
       this.listComptes=[];
+
+    
       this.SimsAssocie.forEach(element => {
         if(element.portSim==this.taskForm.value.portSim){
           this.SIM=element;
-          this.operateur.listCompteByIdoperateur(this.SIM.operateur.id).then((data:any )=>{
+
+          this.operateur.getUssdByIdoperateur(this.SIM.operateur.id).then((data:any )=>{
             this.listComptes=data;
-            console.log("listComptes",this.listComptes);
+            console.log("listComptes",data);
           });
         }
         
       });
 
-     // var obj = JSON.parse(this.taskForm.value.Sim);
-      //console.log(obj);
+
     }
 
 
-    
+  
  
 
 
     suiviSolde(compteId){
-      console.log(compteId.target.value)
-      this.reset();
-      this.sim.suiviSolde(this.taskForm.value.portSim,compteId.target.value).then(data=>{
-        this.USSDmessage=data['reponse'];
-        console.log("solde",data['reponse']);
-      });
-      
+          this.reset();
+          this.sim.suiviSolde(this.taskForm.value.portSim,compteId.target.value).then(data=>{
+          this.USSDmessage=data['reponse'];
+        });
+
     }
 
 
