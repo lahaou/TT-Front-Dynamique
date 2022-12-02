@@ -37,7 +37,7 @@
 
                             <div class="row">
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label
                                             for="exampleFormControlSelect1"><b>{{traduction.langue.scenario}}</b></label>
@@ -53,25 +53,33 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="prenom">{{traduction.langue.datede}}</label>
                                         <input type="datetime-local" formControlName="dateDebut" class="form-control"
                                             [(ngModel)]="dateDebut" name="dateDebut" />
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="prenom">{{traduction.langue.datefin}}</label>
                                         <input type="datetime-local" formControlName="dateFin" class="form-control"
                                             [(ngModel)]="dateFin" name="dateFin" />
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="username" style="color: white;">.</label>
                                         <button type="button" class="btn btn-info form-control" style="color: white"
                                             (click)="onSubmit()">{{traduction.langue.search}}</button>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="username" style="color: white;">.</label>
+                                        <button type="button" class="btn btn-info form-control" style="color: white"
+                                            (click)="onSubmit2()">{{traduction.langue.recalcul}}</button>
                                     </div>
                                 </div>
                             </div>

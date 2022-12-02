@@ -1036,7 +1036,33 @@ this.resultForm.value.dateFin=moment(this.resultForm.value.dateFin).format("YYYY
   }
 
 
+  onSubmit2() {
 
+    this.resultForm.value.dateDebut=moment(this.resultForm.value.dateDebut).format("YYYY-MM-DDTHH:mmZZ");
+    this.resultForm.value.dateFin=moment(this.resultForm.value.dateFin).format("YYYY-MM-DDTHH:mmZZ");
+    
+    
+    
+        console.log(this.resultForm.value);
+    
+        this.result.recalculResultatByScenarioAndDate(this.resultForm.value).then(data => {
+          this.scenario = data
+          this.typeScenario = data['typeScenario'];
+    
+          this.tacheFTP = data['tacheFTPResultats'];
+          this.tacheSTREAM = data['tacheSTREAMINGResultats'];
+          this.tacheHTTP = data['tacheHTTPResultats'];
+    
+          this.tacheSMS = data['tacheSMSResultats'];
+          this.tacheVoix = data['tacheVoixResultats'];
+          console.log(data['tacheDataResultats']);
+          console.log(data['tacheSMSResultats']);
+          console.log(data['tacheVoixResultats']);
+          //this.getchart();
+        });
+    
+    
+      }
 
 
 

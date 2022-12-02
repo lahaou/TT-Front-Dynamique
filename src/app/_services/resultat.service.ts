@@ -84,6 +84,10 @@ export class ResultatService {
       return this.http.post(`${this.env.url}resultatByScenarioAndDate`, data, this.httpOptions2).pipe(retry(0), catchError(this.handleError)).toPromise();
   }
 
+  recalculResultatByScenarioAndDate(data){    
+    return this.http.post(`${this.env.url}recalculResultatByScenarioAndDate`, data, this.httpOptions2).pipe(retry(0), catchError(this.handleError)).toPromise();
+}
+
 
 
 

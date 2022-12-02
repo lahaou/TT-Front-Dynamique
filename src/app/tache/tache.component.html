@@ -58,7 +58,7 @@
                         <select class="form-control" formControlName="simEmettrice" (change)="valueChange()"
                           [(ngModel)]="simEmettrice">
                           <ng-container *ngFor="let sim of SimsAssocie;">
-                            <option *ngIf="sim.etat=='CONNECTED'" value="{{sim.id}}">
+                            <option *ngIf="sim.etat=='CONNECTED' || sim.etat == 'BUSY'" value="{{sim.id}}">
                               {{sim.msisdn}} ({{sim.note}})
                             </option>
                           </ng-container>
@@ -99,7 +99,7 @@
                             {{traduction.langue.saisienumero}}
                           </option>
                           <ng-container *ngFor="let sim of SimsAssocie;">
-                            <option *ngIf="sim.etat=='CONNECTED'" value="{{sim.id}}">
+                            <option *ngIf="sim.etat=='CONNECTED' || sim.etat == 'BUSY'" value="{{sim.id}}">
                               {{sim.msisdn}} ({{sim.note}})
                             </option>
                           </ng-container>
@@ -405,6 +405,33 @@
                               </td>
                             </tr>
                           </ng-container>
+
+
+                          <ng-container *ngIf="sim.etat == 'BUSY'">
+                            <tr>
+                              <td class="text-truncate">
+                                {{sim?.portSim}}
+                              </td>
+                              <td class="text-truncate">
+                                {{sim?.msisdn}} ({{sim?.note}})
+                              </td>
+                              <td class="text-truncate">
+                                {{sim?.operateur?.nom}}
+                              </td>
+                              <td class="text-truncate">
+                                {{sim?.offre?.nom}}
+                              </td>
+                              <td class="text-truncate">
+                                {{sim?.imsi}}
+                              </td>
+                              
+                              <td class="text-truncate" (click)="selectSim(sim)">
+                                <span class="badge badge-warning">Occupée</span>
+                              </td>
+                            </tr>
+                          </ng-container>
+
+
                         </ng-container>
 
 
