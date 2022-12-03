@@ -95,13 +95,19 @@
 
                         <select class="form-control" formControlName="simDestinataire" (change)="valueChange()"
                           [(ngModel)]="simDestinataire">
-                          <option value="0">
+                          <option value="0" selected>
                             {{traduction.langue.saisienumero}}
                           </option>
                           <ng-container *ngFor="let sim of SimsAssocie;">
-                            <option *ngIf="sim.etat=='CONNECTED' || sim.etat == 'BUSY'" value="{{sim.id}}">
-                              {{sim.msisdn}} ({{sim.note}})
-                            </option>
+                            <ng-container *ngIf="sim.id!=taskForm.value.simEmettrice">
+
+                              <option *ngIf="sim.etat=='CONNECTED' || sim.etat == 'BUSY'    " value="{{sim.id}}">
+                                {{sim.msisdn}} ({{sim.note}})
+                              </option>
+                            </ng-container>
+  
+
+
                           </ng-container>
                         </select>
                       </div>
@@ -147,7 +153,7 @@
                       <div class="form-group">
                         <label for="exampleFormControlSelect1">{{traduction.langue.contexte}}</label>
                         
-                        <input type="text" value="{{cnx}}" class="form-control" disabled/>
+                        <input type="text" value="{{cnx}}" class="form-control"/>
                         
                         <!--
                         <select class="form-control" formControlName="contexte">

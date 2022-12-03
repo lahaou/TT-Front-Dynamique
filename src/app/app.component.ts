@@ -11,6 +11,10 @@ export class AppComponent {
     currentUser;
     loginpage=false;
  
+    scrolltoTheTop(){
+        window.scrollTo(0, 0);
+    }
+    
 
     constructor(
         private router: Router,

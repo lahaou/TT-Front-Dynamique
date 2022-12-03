@@ -95,10 +95,12 @@ listComptes=[];
 
 
     suiviSolde(compteId){
-          this.reset();
-          this.sim.suiviSolde(this.taskForm.value.portSim,compteId.target.value).then(data=>{
+      this.reset();
+      this.sim.cancel(this.taskForm.value.portSim).then(data=>{
+        this.sim.suiviSolde(this.taskForm.value.portSim,compteId.target.value).then(data=>{
           this.USSDmessage=data['reponse'];
         });
+      });  
 
     }
 

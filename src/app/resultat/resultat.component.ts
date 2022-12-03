@@ -115,7 +115,7 @@ export class ResultatComponent implements OnInit {
         if (element.unite == -1) { item.Unite = "Appel" } else { item.Unite = element.unite };
 		
 		item.Duree_seconde = element.duree;
-        item.Temps_Operateur = element.tempsOperateur;
+        item.Notification_Fin_Appel = element.tempsOperateur;
 		
         item.Cout_Theorique = Math.round(element.coutTheorique * 100) / 100;
         item.Cout_Theorique_TempsOperateur = Math.round(element.coutTheoriqueTempsOperateur * 100) / 100;

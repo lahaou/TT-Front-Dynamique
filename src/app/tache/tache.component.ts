@@ -116,7 +116,10 @@ idTask
 
       if(data[0]){
         this.simEmettrice=data[0].id;
-        this.simDestinataire=data[0].id;
+      }
+      
+      if(data[1]){
+      this.simDestinataire=data[1].id;
       }
 
     })
@@ -138,12 +141,10 @@ idTask
       if(this.taskForm.value.simDestinataire=='0'){
         this.sim.getContext(this.taskForm.value.simEmettrice,0,this.operateur).then((data:any)=>{
           this.cnx=data.reponse;
-          this.taskForm.value.contexte=data.reponse;
         })
       }else{
         this.sim.getContext(this.taskForm.value.simEmettrice,this.taskForm.value.simDestinataire,null).then((data:any)=>{
           this.cnx=data.reponse;
-          this.taskForm.value.contexte=data.reponse;
         })
       }
 
@@ -166,12 +167,10 @@ idTask
       if(this.taskForm.value.simDestinataire=='0'){
         this.sim.getContext(this.taskForm.value.simEmettrice,0,this.operateur).then((data:any)=>{
           this.cnx=data.reponse;
-          this.taskForm.value.contexte=data.reponse;
         })
       }else{
         this.sim.getContext(this.taskForm.value.simEmettrice,this.taskForm.value.simDestinataire,null).then((data:any)=>{
           this.cnx=data.reponse;
-          this.taskForm.value.contexte=data.reponse;
         })
       }
   
@@ -209,8 +208,9 @@ idTask
 
 onSubmit(){
 
-
-  console.log("test")
+  this.taskForm.value.contexte=this.cnx;
+  console.log(this.taskForm.value);
+  
 
   if(this.taskForm.value.facturation=="VOLUME" && this.taskForm.value.typeTache=='FTP'){this.taskForm.value.tarification=0}
 

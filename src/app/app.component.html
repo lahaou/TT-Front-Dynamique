@@ -75,25 +75,25 @@
    <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true" *ngIf="loginpage">
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class=" navigation-header"><span>{{traduction.langue.general}}</span><i class=" ft-minus" data-toggle="tooltip" data-placement="right" data-original-title=""></i>
+                <li class=" navigation-header" (click)="scrolltoTheTop()"><span>{{traduction.langue.general}}</span><i class=" ft-minus" data-toggle="tooltip" data-placement="right" data-original-title=""></i>
                 </li>
 
 
 
 
-                <li class=" nav-item"><a routerLink="/home" ><i class="ft-home"></i><span class="menu-title" data-i18n="">{{traduction.langue.dashboard}}</span></a></li>
-            <li class=" nav-item"><a routerLink="/sim" ><i class="ft-smartphone"></i><span class="menu-title" data-i18n="">{{traduction.langue.sim}}</span></a></li>
+                <li class=" nav-item"  (click)="scrolltoTheTop()"><a routerLink="/home" ><i class="ft-home"></i><span class="menu-title" data-i18n="">{{traduction.langue.dashboard}}</span></a></li>
+            <li class=" nav-item" (click)="scrolltoTheTop()"><a routerLink="/sim" ><i class="ft-smartphone"></i><span class="menu-title" data-i18n="">{{traduction.langue.sim}}</span></a></li>
 
 
 
-                <li class=" nav-item" *ngIf="currentUser?.role == 'Administrateur'"> <a><i class="ft-user"></i><span class="menu-title" data-i18n="">Administration</span></a>
+                <li  (click)="scrolltoTheTop()" class=" nav-item" *ngIf="currentUser?.role == 'Administrateur'"> <a><i class="ft-user"></i><span class="menu-title" data-i18n="">Administration</span></a>
                     <ul class="menu-content">
-                        <li class=" nav-item" *ngIf="currentUser?.role == 'Administrateur'"><a routerLink="/operateur" ><i class="ft-target"></i><span class="menu-title" data-i18n="">{{traduction.langue.operateurs}}</span></a></li>
-                        <li class=" nav-item" *ngIf="currentUser.role == 'Administrateur'"><a routerLink="/offre" ><i class="ft-globe"></i><span class="menu-title" data-i18n="">{{traduction.langue.offre}}</span></a></li>
-                        <li class=" nav-item" *ngIf="currentUser.role == 'Administrateur'"><a routerLink="/serveurFTP" ><i class="ft-server"></i><span class="menu-title" data-i18n="">{{traduction.langue.serveurftp}}</span></a></li>
-                        <li class=" nav-item" *ngIf="currentUser.role == 'Administrateur'"><a routerLink="/user" ><i class="ft-users"></i><span class="menu-title" data-i18n="">{{traduction.langue.user}}</span></a></li>
-                        <li class=" nav-item" *ngIf="currentUser.role == 'Administrateur'"><a routerLink="/gestion" ><i class="ft-clipboard"></i><span class="menu-title" data-i18n="">{{traduction.langue.gestionoffreoperateur}}</span></a></li>
-                        <li class=" nav-item" *ngIf="currentUser?.role == 'Administrateur'"><a routerLink="/log" ><i class="fa fa-slack"></i><span class="menu-title" data-i18n="">Scénario log</span></a></li>
+                        <li class=" nav-item" *ngIf="currentUser?.role == 'Administrateur'" (click)="scrolltoTheTop()"><a routerLink="/operateur" ><i class="ft-target"></i><span class="menu-title" data-i18n="">{{traduction.langue.operateurs}}</span></a></li>
+                        <li class=" nav-item" *ngIf="currentUser.role == 'Administrateur'" (click)="scrolltoTheTop()"><a routerLink="/offre" ><i class="ft-globe"></i><span class="menu-title" data-i18n="">{{traduction.langue.offre}}</span></a></li>
+                        <li class=" nav-item" *ngIf="currentUser.role == 'Administrateur'" (click)="scrolltoTheTop()"><a routerLink="/serveurFTP" ><i class="ft-server"></i><span class="menu-title" data-i18n="">{{traduction.langue.serveurftp}}</span></a></li>
+                        <li class=" nav-item" *ngIf="currentUser.role == 'Administrateur'" (click)="scrolltoTheTop()"><a routerLink="/user" ><i class="ft-users"></i><span class="menu-title" data-i18n="">{{traduction.langue.user}}</span></a></li>
+                        <li class=" nav-item" *ngIf="currentUser.role == 'Administrateur'" (click)="scrolltoTheTop()"><a routerLink="/gestion" ><i class="ft-clipboard"></i><span class="menu-title" data-i18n="">{{traduction.langue.gestionoffreoperateur}}</span></a></li>
+                        <li class=" nav-item" *ngIf="currentUser?.role == 'Administrateur'" (click)="scrolltoTheTop()"><a routerLink="/log" ><i class="fa fa-slack"></i><span class="menu-title" data-i18n="">Scénario log</span></a></li>
                    
                     </ul>
                 </li>
@@ -101,18 +101,18 @@
 
 
                
-                <li class=" nav-item"><a><i class="ft-link"></i><span class="menu-title" data-i18n="">{{traduction.langue.scenarios}}</span></a>
+                <li class=" nav-item" (click)="scrolltoTheTop()"><a><i class="ft-link"></i><span class="menu-title" data-i18n="">{{traduction.langue.scenarios}}</span></a>
                     <ul class="menu-content">
-                            <li><a class="menu-item" routerLink="/scenario" >{{traduction.langue.gestionscenario}}</a></li>
-                            <li><a class="menu-item" routerLink="/tache" >{{traduction.langue.gestiontache}}</a></li>
+                            <li (click)="scrolltoTheTop()"><a class="menu-item" routerLink="/scenario" >{{traduction.langue.gestionscenario}}</a></li>
+                            <li (click)="scrolltoTheTop()"><a class="menu-item" routerLink="/tache" >{{traduction.langue.gestiontache}}</a></li>
                    
                     </ul>
                 </li>
-                <li class=" nav-item"><a routerLink="/campagne" ><i class="ft-layers"></i><span class="menu-title" data-i18n="">{{traduction.langue.campagne}}</span></a></li>
-                <li class=" nav-item"><a routerLink="/planification" ><i class="ft-calendar"></i><span class="menu-title" data-i18n="">{{traduction.langue.planification}}</span></a></li>
-                <li class=" nav-item"><a routerLink="/resultat" ><i class="ft-list"></i><span class="menu-title" data-i18n="">{{traduction.langue.resultat}}</span></a></li>
-                <li class=" nav-item" ><a routerLink="/trace" ><i class="fa fa-wpforms"></i><span class="menu-title" data-i18n="">Traçabilité</span></a></li>
-                <li class=" nav-item" ><a routerLink="/execution" ><i class="fa fa-paper-plane-o"></i><span class="menu-title" data-i18n="">Exécution</span></a></li>
+                <li class=" nav-item" (click)="scrolltoTheTop()"><a routerLink="/campagne" ><i class="ft-layers"></i><span class="menu-title" data-i18n="">{{traduction.langue.campagne}}</span></a></li>
+                <li class=" nav-item" (click)="scrolltoTheTop()"><a routerLink="/planification" ><i class="ft-calendar"></i><span class="menu-title" data-i18n="">{{traduction.langue.planification}}</span></a></li>
+                <li class=" nav-item" (click)="scrolltoTheTop()"><a routerLink="/resultat" ><i class="ft-list"></i><span class="menu-title" data-i18n="">{{traduction.langue.resultat}}</span></a></li>
+                <li class=" nav-item"  (click)="scrolltoTheTop()"><a routerLink="/trace" ><i class="fa fa-wpforms"></i><span class="menu-title" data-i18n="">Traçabilité</span></a></li>
+                <li class=" nav-item"  (click)="scrolltoTheTop()"><a routerLink="/execution" ><i class="fa fa-paper-plane-o"></i><span class="menu-title" data-i18n="">Exécution</span></a></li>
                
                  
             </ul>
