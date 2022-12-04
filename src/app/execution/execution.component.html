@@ -10,7 +10,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title" >Scenario en Exécution </h4>
+                    <h4 class="card-title" >Scénarios en exécution </h4>
 
 
                     <a data-action="stop execution" >
@@ -19,6 +19,35 @@
                     </a>
                    
 
+                </div>
+
+                <div class="card-content">
+                    <div class="card-body">
+
+                        <form [formGroup]="resultForm">
+
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label
+                                            for="exampleFormControlSelect1"><b>{{traduction.langue.scenario}}</b></label>
+
+                                        <select class="form-control" formControlName="idScenario" [(ngModel)]="idScenario">
+                                            <option *ngFor="let scenario of Scenarios;" value="{{scenario.id}}">
+                                                {{scenario.nom}}</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                
+                            </div>
+
+
+                        </form>
+
+                    </div>
                 </div>
                
 

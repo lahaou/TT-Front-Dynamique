@@ -98,8 +98,16 @@ executeScenario(id){
   return this.http.get(`${this.env.url}execute/${id}`, this.httpOptions2).pipe(retry(0)).toPromise();
 }
 
-execStatusScenario(){
-  return this.http.get(`${this.env.url}execStatus`, this.httpOptions2).pipe(retry(0), catchError(this.handleError)).toPromise();
+// execStatusScenario(){
+//   return this.http.get(`${this.env.url}execStatus`, this.httpOptions2).pipe(retry(0), catchError(this.handleError)).toPromise();
+// }
+
+scenariosEnExecution(){
+  return this.http.get(`${this.env.url}scenariosOnExec`, this.httpOptions2).pipe(retry(0), catchError(this.handleError)).toPromise();
+}
+
+execStatusScenario(id){
+  return this.http.post(`${this.env.url}execStatus`, id, this.httpOptions2).pipe(retry(0), catchError(this.handleError)).toPromise();
 }
 
 

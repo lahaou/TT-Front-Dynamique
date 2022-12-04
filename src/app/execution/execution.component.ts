@@ -15,15 +15,23 @@ declare const $: any;
 })
 export class ExecutionComponent implements OnInit {
   id;
+  resultForm: FormGroup;
 
-constructor( public result:ScenarioService,public ScenarioService:ScenarioService,public traduction :TraductionService){
+constructor( public result:ScenarioService,public ScenarioService:ScenarioService,public traduction :TraductionService,private formBuilder: FormBuilder){
 }
 
 
   ngOnInit() {
+
+    this.resultForm = this.formBuilder.group({
+      idScenario: [0, Validators.required]
+    });
+
+        this.getListScenarios();
         this.getStatusScenario();
+
         this.id = setInterval(() => {
-          console.log("status ++")
+         // console.log("status ++")
           this.getStatusScenario(); 
         }, 2000);
 
@@ -43,19 +51,36 @@ constructor( public result:ScenarioService,public ScenarioService:ScenarioServic
 
 
 
-  getStatusScenario(){
-    this.ScenarioService.execStatusScenario().then((data:any)=>{
-    if(data['data']!=null){
-      this.ScenarioService.resultglobal = this.ScenarioService.resultglobal+"<br>" + data['data'];
-    }
-    if(data['data']=="Fin d'exécution"){
-    //this.stop();
-	this.ScenarioService.resultglobal="";
-    }
-    document.querySelector('.mesgs').scrollTop = document.querySelector('.mesgs').scrollHeight
-      
+  idScenario;
+  Scenarios=[];
+  getListScenarios(){
+    this.ScenarioService.scenariosEnExecution().then((data:any)=>{
+      this.Scenarios=data;
+      if(data[0]){
+        this.idScenario = data[0].id;
+      }
     });
+  }
+
+  getStatusScenario(){
+
+    if(this.idScenario){
+
+      this.ScenarioService.execStatusScenario(this.idScenario).then((data:any)=>{
+        if(data['data']!=null){
+          this.ScenarioService.resultglobal = this.ScenarioService.resultglobal+"<br>" + data['data'];
+        }
+        if(data['data']=="Fin d'exécution"){
+        //this.stop();
+      this.ScenarioService.resultglobal="";
+        }
+        document.querySelector('.mesgs').scrollTop = document.querySelector('.mesgs').scrollHeight
+          
+        });
+
     }
+    
+  }
 
 
 
