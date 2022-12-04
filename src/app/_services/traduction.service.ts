@@ -99,6 +99,7 @@ export class TraductionService {
       "login":"Identifiant",
       "role":"Privilège",
       "etat":"Etat",
+      "signal":"Signal",
       "password" :"Mot de passe",
 
       //gestion
@@ -151,6 +152,7 @@ export class TraductionService {
      "notsave":"Non enregistrée",
      "nosim":"Pas de SIM",
      "connected":"Connectée",
+     "busy":"Occupée",
      "disconnected":"Déconnectée",
      "save":"Enregistrée",
      "pinwaiting":"Attente PIN",
@@ -384,6 +386,7 @@ export class TraductionService {
       "login":"Username",
       "role":"Privilege",
       "etat":"Status",
+      "signal":"Signal",
       "password" :"Password",
 
       //gestion
@@ -435,6 +438,7 @@ export class TraductionService {
      "notsave":"Not saved",
      "nosim":"No SIM",
      "connected":"Connected",
+     "busy":"Busy",
      "disconnected":"Disconnected",
      "save":"Saved",
      "pinwaiting":"Waiting PIN",

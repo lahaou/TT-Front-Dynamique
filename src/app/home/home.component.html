@@ -225,6 +225,7 @@
                                     <th>{{traduction.langue.operateur}}</th>
                                     <th>{{traduction.langue.offre}}</th>
                                     <th>{{traduction.langue.etat}}</th>
+                                    <th>{{traduction.langue.signal}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -238,6 +239,7 @@
                                             <td class="text-truncate">***</td>
                                             <td class="text-truncate">***</td>
                                             <td class="text-truncate"><span  class="badge badge-secondary">{{traduction.langue.nosim}} </span></td>
+                                            <td class="text-truncate">***</td>
                                         </tr>
                                     </ng-container>
 
@@ -264,7 +266,23 @@
                                             </td>
                                             <td class="text-truncate"
                                                 *ngIf="sim.etat == 'BUSY' "><span
-                                                    class="badge badge-warning">Occupée</span></td>
+                                                    class="badge badge-warning">{{traduction.langue.busy}}</span></td>
+
+
+                                            <td class="text-truncate"
+                                                    *ngIf="sim.signal >= -90"><span
+                                                        class="badge badge-success">{{sim?.signal}} dBm</span>
+                                            </td>
+
+                                            <td class="text-truncate"
+                                                    *ngIf="(sim.signal < -90) && (sim.signal >= -100)"><span
+                                                        class="badge badge-warning">{{sim?.signal}} dBm</span>
+                                            </td>
+
+                                            <td class="text-truncate"
+                                                    *ngIf="sim.signal < -100"><span
+                                                        class="badge badge-danger">{{sim?.signal}} dBm</span>
+                                            </td>
 
 
                                         </tr>
