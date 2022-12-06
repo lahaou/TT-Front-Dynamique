@@ -54,7 +54,16 @@
                 <div class="card-content">
                     <div class="card-body">
 
-                        <p class="mesgs" style="font-size: 14px; color:grey; margin-bottom: 0; overflow: scroll;height: 400px; max-height: 400px;width: 100%;;overflow-x: hidden;text-align: left;" [innerHtml]="ScenarioService.resultglobal"> </p>
+                        <p class="mesgs"  style="font-size: 14px; color:grey; margin-bottom: 0; overflow: scroll;height: 400px; max-height: 400px;width: 100%;;overflow-x: hidden;text-align: left;">
+                        
+                        <ng-container *ngFor="let m of tab">
+                            <ng-container *ngIf="m.id==idScenario">
+                                <div [innerHTML]="m.data"></div>
+                            </ng-container>
+
+                        </ng-container>
+
+                        </p>
                
                     </div>
                 </div>

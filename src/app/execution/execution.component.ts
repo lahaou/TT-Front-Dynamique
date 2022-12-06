@@ -62,17 +62,18 @@ constructor( public result:ScenarioService,public ScenarioService:ScenarioServic
     });
   }
 
+  tab=[]
   getStatusScenario(){
 
     if(this.idScenario){
 
-      this.ScenarioService.execStatusScenario(this.idScenario).then((data:any)=>{
+      this.ScenarioService.execStatusScenario(this.idScenario).then(data=>{
         if(data['data']!=null){
-          this.ScenarioService.resultglobal = this.ScenarioService.resultglobal+"<br>" + data['data'];
+          this.tab.push(data);
         }
         if(data['data']=="Fin d'exécution"){
         //this.stop();
-      this.ScenarioService.resultglobal="";
+        //this.ScenarioService.resultglobal="";
         }
         document.querySelector('.mesgs').scrollTop = document.querySelector('.mesgs').scrollHeight
           

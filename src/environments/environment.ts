@@ -5,8 +5,9 @@
 export const environment = {
   production: false,
   //url: 'http://192.168.40.139:8080/tariffstracker/tarif/',
-  url: 'http://localhost:8080/tarif/',
-  //url: 'http://localhost:8080/tariffstracker/tarif/',
+  //url: 'http://localhost:8080/tarif/',
+  //url: 'http://172.16.11.20:8080/tariffstracker/tarif/',
+  url: 'http://tariffstracker.arcep.ne/tariffstracker/tarif/',
   
 };
 
