@@ -10,6 +10,7 @@ declare const $: any;
 })
 export class TacheComponent implements OnInit {
 
+    technologies=[];
 
     SimsAssocie=[];
     tarifications=[];
@@ -57,6 +58,13 @@ export class TacheComponent implements OnInit {
     this.listOperateur();
     this.listScenario();
     this.listServeurFTP();
+    this.listTechnologies();
+  }
+
+  listTechnologies(){
+    this.taskService.listTechnologies().then((data:any)=>{
+        this.technologies=data;
+    })
   }
 
 
@@ -83,6 +91,8 @@ export class TacheComponent implements OnInit {
     fichier: ['F_1M', Validators.required],
     serveurFTP: ['', Validators.required],
     facturation: ['VOLUME', Validators.required],
+
+    technologie: ['Automatique', Validators.required],
 
 });
 

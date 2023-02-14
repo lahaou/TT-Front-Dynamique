@@ -60,19 +60,6 @@ export class OperateurComponent implements OnInit {
         })
     }
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
     onSubmit() {
 
         if (this.operateurForm.value.nom &&

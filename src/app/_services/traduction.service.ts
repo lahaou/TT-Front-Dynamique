@@ -293,6 +293,8 @@ export class TraductionService {
 'packVoixSecondesFinal':'Package Voix Seconde Final',
 'packDifferenceVoixSecondes':'Différence Package Voix Seconde',
 
+'technologie':'Technologie',
+
 
  }
 
@@ -576,7 +578,7 @@ export class TraductionService {
 'packDifferenceVoixMinutes':'packDifferenceVoixMinutes',
 
 
-
+'technologie':'Technology',
 
 
 

@@ -302,6 +302,17 @@
                       </div>
 
                     </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="exampleFormControlSelect1">{{traduction.langue.technologie}}</label>
+                        <select class="form-control" formControlName="technologie">
+                            <option *ngFor="let technologie of technologies" value="{{technologie}}">{{technologie}}</option>
+                        </select>
+                      </div>
+                    </div>
+
+
                   </div>
 
 
@@ -652,6 +663,8 @@
                           </th>
                           <th>{{traduction.langue.serveurFTP}}
                           </th>
+                          <th>{{traduction.langue.technologie}}
+                          </th>
 
                           <th>Action</th>
 
@@ -684,6 +697,9 @@
                             </td>
                             <td class="text-truncate">
                               {{task?.serveurFTP?.nom}}
+                            </td>
+                            <td class="text-truncate">
+                              {{task?.technologie}}
                             </td>
 
 

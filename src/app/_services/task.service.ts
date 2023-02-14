@@ -82,5 +82,9 @@ verifierSim(idScenario){
     return this.http.get(`${this.env.url}listTacheScenario/${idScenario}`, this.httpOptions2).pipe(retry(0), catchError(this.handleError)).toPromise();
 }
 
+listTechnologies() {
+  return this.http.get(`${this.env.url}technologies`, this.httpOptions).pipe(retry(0), catchError(this.handleError)).toPromise();
+}
+
 
 }

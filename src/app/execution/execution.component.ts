@@ -69,12 +69,16 @@ constructor( public result:ScenarioService,public ScenarioService:ScenarioServic
 
       this.ScenarioService.execStatusScenario(this.idScenario).then(data=>{
         if(data['data']!=null){
-          this.tab.push(data);
+          if(data['data']!="Fin d'exécution"){
+            this.tab.push(data);
+          } else {
+            this.tab = [];
+          }
         }
-        if(data['data']=="Fin d'exécution"){
+       // if(data['data']=="Fin d'exécution"){
         //this.stop();
         //this.ScenarioService.resultglobal="";
-        }
+        //}
         document.querySelector('.mesgs').scrollTop = document.querySelector('.mesgs').scrollHeight
           
         });
