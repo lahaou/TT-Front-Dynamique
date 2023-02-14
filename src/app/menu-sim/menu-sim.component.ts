@@ -87,10 +87,7 @@ listComptes=[];
       });
 
 
-    }
-
-
-  
+    } 
  
 
 
@@ -114,15 +111,28 @@ listComptes=[];
       });
     }
 
-
+    EmetteurSMS
     SMSmessage
     getSms(){
       //this.reset();
       this.sim.getSms(this.taskForm.value.portSim).then(data=>{
-        this.SMSmessage=data;
-        console.log("SMS",data['reponse']);
+        this.EmetteurSMS=data;
+        
+        this.adresses = this.EmetteurSMS.emetteurs;
+        if (this.adresses[0]) {
+          this.add = this.adresses[0];
+          this.SMSmessage = this.EmetteurSMS.maps[this.add];
+        }
+
       });
     }
+
+    add
+    adresses
+    adresseChange(){
+      this.SMSmessage = this.EmetteurSMS.maps[this.add];
+    }
+
     deleteSMS(indexSMS){
       this.sim.deleteSms(this.taskForm.value.portSim,indexSMS).then(data=>{
         this.SMSmessage=data;

@@ -195,36 +195,48 @@
 
 
 
-                
+
                 <div class="col-md-12">
 
                     <div class="card">
-                        <div class="card-content">
 
-                            <div class="card-header">
-                                <h4 class="card-title">
-                                    <span>Liste SMS</span>
-                                </h4>
+                        <div class="card-header">
+                            <div class="form-group">
+                                <h4 class="card-title">Liste SMS</h4>
 
                                 <a data-action="autre"> <i class="fa fa-refresh" (click)="getSms()"
-                                        style="float: right ;margin-right: 1rem;margin-left: 1rem;"></i></a>
-
-
+                                            style="float: right ;margin-right: 1rem;margin-left: 1rem;"></i></a>
                             </div>
-                            <div class="card-body" style="overflow-y: scroll;height: 400px;">
+                            
+                            
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1"> </label>
+                                <label for="exampleFormControlSelect1"> Emetteur </label>
+                                <select class="form-control" [(ngModel)]="add" (change)="adresseChange()">
+                                    <option *ngFor="let add of adresses" value="{{add}}">{{add}}</option>
+                                </select>
+                            </div>                            
+                            
+                        </div>
+						
+                        <div class="card-content">
 
-                                <table class="table ps-theme-default">
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <!-- <th>Etat</th> -->
-                                            <th>Adresse</th>
-                                            <th>Message</th>
-                                            <!-- <th>Action</th>-->
+                            <div class="card-body">
 
-                                        </tr>
-                                    </thead>
-                                    <tbody *ngIf='SMSmessage'>
+
+                                <div class="table-responsive">
+                                    <table id="recent-orders" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+												<th>Adresse</th>
+												<th>Message</th>
+
+                                            </tr>
+                                        </thead>
+										
+                                        <tbody *ngIf='SMSmessage'>
                                         <tr *ngFor="let sms of SMSmessage">
                                             <td class="text-truncate">{{sms.date | date:'dd-MM-yyyy HH:mm:ss'}}</td>
                                             <!-- <td class="text-truncate">
@@ -246,12 +258,35 @@
 
                                         </tr>
                                     </tbody>
-                                </table>
+									
+                                    </table>
+                                </div>
+
+
+
 
                             </div>
+
+
+
+
+
                         </div>
                     </div>
+
                 </div>
+                
+                
+
+
+
+
+
+
+
+
+
+
 
             </div>
 

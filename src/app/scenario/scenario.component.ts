@@ -65,8 +65,8 @@ selectScenario(scenario){
 
 listScenario(){
   this.ScenarioService.getAll().subscribe((data:any)=>{
-    console.log("scenarios--->",data)
     this.Scenarios=data;
+
     $(document).ready( function () {
       $('#recent-orders').DataTable({
        "scrollY":        "400px",
@@ -99,7 +99,8 @@ listScenario(){
     
     });
   } );
-  })
+  
+})
 
 }
 
