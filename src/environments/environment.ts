@@ -4,9 +4,7 @@
 
 export const environment = {
   production: false,
-//  url: 'http://localhost:8080/tarif/',
-  //url: 'https://tarif.arpt.gov.gn:8443/tariffstracker/tarif/',
-  url: 'http://192.168.120.45/tariffstracker/tarif/',
+  url: 'https://tariffstracker.arcep.ne/tariffstracker/tarif/',
 };
 
 /*

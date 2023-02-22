@@ -212,7 +212,9 @@
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1"> </label>
                                 <label for="exampleFormControlSelect1"> Emetteur </label>
+                               
                                 <select class="form-control" [(ngModel)]="add" (change)="adresseChange()">
+                                    <option value="ALL_EMETTEUR" selected> Tous les émetteurs </option>
                                     <option *ngFor="let add of adresses" value="{{add}}">{{add}}</option>
                                 </select>
                             </div>                            

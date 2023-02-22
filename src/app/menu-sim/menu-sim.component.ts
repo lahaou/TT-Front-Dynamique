@@ -130,7 +130,12 @@ listComptes=[];
     add
     adresses
     adresseChange(){
-      this.SMSmessage = this.EmetteurSMS.maps[this.add];
+      if (this.add ==='ALL_EMETTEUR') {
+        this.SMSmessage = this.EmetteurSMS.allSMS;
+      } else {
+        this.SMSmessage = this.EmetteurSMS.maps[this.add];
+      }
+      
     }
 
     deleteSMS(indexSMS){
