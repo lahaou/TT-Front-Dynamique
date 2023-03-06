@@ -9,7 +9,15 @@
 
                     <div class="card">
                         <div class="card-header">
+
+                            <a data-toggle="modal" (click)="onReset()" data-target="#modal-tarif"
+                                            style="color: rgb(38, 156, 224); float:right">
+                                            {{traduction.langue.ajouter}} {{traduction.langue.tarification}} </a>
+
+                                            <br>
+
                             <h4 class="card-title">{{traduction.langue.list_formulaire_offre}}</h4>
+
                             <span class="text-danger" *ngIf="erreursaisie">*
                                 {{traduction.langue.champsobligatoires}}</span>
                         </div>
@@ -22,10 +30,7 @@
                                     <div class="form-group">
                                         <label for="offrename">{{traduction.langue.nom}}</label>
                                         <input type="text" formControlName="nom" class="form-control" />
-                                        <br>
-                                        <a data-toggle="modal" (click)="onReset()" data-target="#modal-tarif"
-                                            style="color: rgb(38, 156, 224)">{{traduction.langue.ajouter}}
-                                            {{traduction.langue.tarification}} </a>
+                                        
                                     </div>
 
 

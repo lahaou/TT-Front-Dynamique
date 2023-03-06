@@ -73,6 +73,14 @@ listComptes=[];
       console.log(this.taskForm.value.portSim);
       this.listComptes=[];
 
+
+      this.USSDmessage="";
+
+      this.EmetteurSMS=null;
+      this.adresses = [];
+      this.SMSmessage = [];
+      this.add = null;
+
     
       this.SimsAssocie.forEach(element => {
         if(element.portSim==this.taskForm.value.portSim){
@@ -117,12 +125,15 @@ listComptes=[];
       //this.reset();
       this.sim.getSms(this.taskForm.value.portSim).then(data=>{
         this.EmetteurSMS=data;
-        
         this.adresses = this.EmetteurSMS.emetteurs;
-        if (this.adresses[0]) {
-          this.add = this.adresses[0];
-          this.SMSmessage = this.EmetteurSMS.maps[this.add];
-        }
+
+        this.add = 'ALL_EMETTEUR';
+        this.SMSmessage = this.EmetteurSMS.allSMS;
+
+        // if (this.adresses[0]) {
+        //   this.add = this.adresses[0];
+        //   this.SMSmessage = this.EmetteurSMS.maps[this.add];
+        // }
 
       });
     }
@@ -209,15 +220,15 @@ listComptes=[];
 
     appele(variable){
       console.log(variable);
-      this.USSDmessage="";
       if(variable){
+        this.USSDmessage="Numérotation ...";
         this.sim.appeler(this.taskForm.value.portSim,this.taskForm.value.SMS).then(data=>{
-        //  this.USSDmessage=data['reponse'];
+        this.USSDmessage=data['reponse'];
         });
 
       }else{
         this.sim.raccrocher(this.taskForm.value).then(data=>{
-      //    this.USSDmessage=data['reponse'];
+          this.USSDmessage=data['reponse'];
         });
 
       }
